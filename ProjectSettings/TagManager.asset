@@ -41,3 +41,12 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Background
+    uniqueID: 1363933405
+    locked: 0
+  - name: Character
+    uniqueID: 852795555
+    locked: 0
+  - name: Cave
+    uniqueID: 942318543
+    locked: 0
