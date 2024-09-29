@@ -3,7 +3,9 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Metal_1
+  - bg
   layers:
   - Default
   - TransparentFX
@@ -43,6 +45,9 @@ TagManager:
     locked: 0
   - name: Background
     uniqueID: 1363933405
+    locked: 0
+  - name: Walls
+    uniqueID: 1092092261
     locked: 0
   - name: Character
     uniqueID: 852795555

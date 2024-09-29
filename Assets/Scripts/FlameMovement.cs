@@ -3,16 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
+
 public class FlameMovement : MonoBehaviour
 {
-    public int speed = 10;
+    public float speed = 10f;
     private Rigidbody2D characterBody;
     private Vector2 velocity;
     private Vector3 inputMovement;
 
     void Start()
     {
-        velocity = new Vector2(speed, speed);
+        // velocity = new Vector2(speed, speed);
         characterBody = GetComponent<Rigidbody2D>();
     }
 
@@ -26,8 +27,8 @@ public class FlameMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Vector2 delta = inputMovement * velocity * Time.deltaTime;
+        Vector2 delta = speed * Time.deltaTime * inputMovement;
         Vector2 newPosition = characterBody.position + delta;
         characterBody.MovePosition(newPosition);
-    }
+    }   
 }
