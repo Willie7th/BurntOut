@@ -4,8 +4,10 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Metal_1
+  - stone_walls
+  - metal_1
   - bg
+  - paths
   layers:
   - Default
   - TransparentFX

@@ -20,8 +20,8 @@ public class MetalWallCollision : MonoBehaviour
 
     void Start()
     {
-        tilemap = GameObject.FindWithTag("Metal_1").GetComponent<Tilemap>();
-        background = GameObject.FindWithTag("bg").GetComponent<Tilemap>();
+        tilemap = GameObject.FindWithTag("metal_1").GetComponent<Tilemap>();
+        background = GameObject.FindWithTag("paths").GetComponent<Tilemap>();
 
     }
 
@@ -34,7 +34,7 @@ public class MetalWallCollision : MonoBehaviour
     void OnCollisionStay2D(Collision2D collision)
     {
       
-        if (collision.gameObject.CompareTag("Metal_1"))
+        if (collision.gameObject.CompareTag("metal_1"))
         {
           
             if (damageTimer >= damageInterval)
