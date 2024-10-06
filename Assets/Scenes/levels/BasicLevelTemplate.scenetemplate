@@ -1,0 +1,48 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 13966, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: BasicLevelTemplate
+  m_EditorClassIdentifier: 
+  templateScene: {fileID: 102900000, guid: aebfa276c27442849ae8912683fe23fc, type: 3}
+  templateName: LevelTemplate
+  description: 'Starting Room of a level '
+  preview: {fileID: 0}
+  dependencies:
+  - dependency: {fileID: 11400000, guid: db50daf8cafd39f46b35d48ae95d1eb9, type: 2}
+    instantiationMode: 1
+  - dependency: {fileID: 11400000, guid: 287e63dc65540ae4392f817a7609323e, type: 2}
+    instantiationMode: 1
+  - dependency: {fileID: 11400000, guid: ea6af55201bcfae47b1218f7b1bc2dcb, type: 2}
+    instantiationMode: 1
+  - dependency: {fileID: 2800000, guid: 2649a2108c3b1424bbd4514f1e0691f6, type: 3}
+    instantiationMode: 1
+  - dependency: {fileID: 11400000, guid: cec1208b65facbb42981e01b764df3de, type: 2}
+    instantiationMode: 1
+  - dependency: {fileID: 2800000, guid: 4f950284164f90a4dba8c1174c69d740, type: 3}
+    instantiationMode: 1
+  - dependency: {fileID: 11400000, guid: 81c5bbdc4e6c2154b81d6ba15c47649a, type: 2}
+    instantiationMode: 1
+  - dependency: {fileID: 11400000, guid: 4523b3f042423274b83d17e563594720, type: 2}
+    instantiationMode: 1
+  - dependency: {fileID: 11400000, guid: bc1ff80e9ade3904d9098e44112a1edb, type: 2}
+    instantiationMode: 1
+  - dependency: {fileID: 11400000, guid: 1bd701b61dc738a469d3125980d8533c, type: 2}
+    instantiationMode: 1
+  - dependency: {fileID: 3774549132822716761, guid: 0c0a425ab693e114d9079ed63322f192, type: 3}
+    instantiationMode: 1
+  - dependency: {fileID: 2800000, guid: 6a9656a81006def41aa9781307269b66, type: 3}
+    instantiationMode: 1
+  - dependency: {fileID: 2800000, guid: c96956b3a587f3444b975a8926349bd2, type: 3}
+    instantiationMode: 1
+  templatePipeline: {fileID: 0}
+  badge: {fileID: 0}
+  addToDefaults: 0
