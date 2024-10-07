@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 2649a2108c3b1424bbd4514f1e0691f6
+guid: 41e588ca6bf99004f8f1fef8835801c3
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -48,7 +48,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 64
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -123,190 +123,85 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: cartoon-element-animation-frames_0
+      name: Waters_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
-        width: 222.22223
-        height: 1111
-      alignment: 9
-      pivot: {x: 0.60101014, y: 0.20559832}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: b8df652bd6cc89543b6edea6211491b1
-      internalID: -641543513
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Fire
-      rect:
-        serializedVersion: 2
-        x: 220
-        y: 0
-        width: 222
-        height: 1111
-      alignment: 9
-      pivot: {x: 0.49999985, y: 0.221929}
-      border: {x: 20, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 5b193769688c22d46be4e48b6816c0e9
-      internalID: 1490274783
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: cartoon-element-animation-frames_2
-      rect:
-        serializedVersion: 2
-        x: 444
-        y: 0
-        width: 222.22223
-        height: 1111
+        y: 128
+        width: 64
+        height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f1da19dc66f6f3548ab70e766b7cae11
-      internalID: -1248911565
+      spriteID: ea3f931479c4e174b9147438e0f7aa14
+      internalID: -1852198576
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: cartoon-element-animation-frames_3
+      name: Waters_1
       rect:
         serializedVersion: 2
-        x: 666
-        y: 0
-        width: 222.22223
-        height: 1111
+        x: 64
+        y: 128
+        width: 64
+        height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7ef55e4079d553c468173df84065c3fd
-      internalID: 2102635254
+      spriteID: c6be561bd30126f489376feda11cdc5c
+      internalID: 558830027
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: cartoon-element-animation-frames_4
+      name: Waters_2
       rect:
         serializedVersion: 2
-        x: 888
-        y: 0
-        width: 222.22223
-        height: 1111
+        x: 128
+        y: 128
+        width: 64
+        height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e7d22548e7775c145a6ed5e789b49146
-      internalID: 480298721
+      spriteID: 1cb9ee49e5f00844fa07a682841b189d
+      internalID: 363730352
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: cartoon-element-animation-frames_5
+      name: Waters_3
       rect:
         serializedVersion: 2
-        x: 1110
-        y: 0
-        width: 222.22223
-        height: 1111
+        x: 192
+        y: 128
+        width: 64
+        height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6d88789adda7c5a4b97eda30d426bd51
-      internalID: 539148609
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: cartoon-element-animation-frames_6
-      rect:
-        serializedVersion: 2
-        x: 1332
-        y: 0
-        width: 222.22223
-        height: 1111
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: a7f3fbd7d39d15b4d817b1a537c83530
-      internalID: -433196027
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: cartoon-element-animation-frames_7
-      rect:
-        serializedVersion: 2
-        x: 1554
-        y: 0
-        width: 222.22223
-        height: 1111
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 4afc6722059d2d042a521d8c880dd921
-      internalID: -1749788906
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: cartoon-element-animation-frames_8
-      rect:
-        serializedVersion: 2
-        x: 1776
-        y: 0
-        width: 222.22223
-        height: 1111
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 76a0bfd026a49144da32c7aef171f816
-      internalID: 878689559
+      spriteID: 0aa7898c74811c744bf1dcb06d8876b8
+      internalID: -898605675
       vertices: []
       indices: 
       edges: []
@@ -322,15 +217,10 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Fire: 1490274783
-      cartoon-element-animation-frames_0: -641543513
-      cartoon-element-animation-frames_2: -1248911565
-      cartoon-element-animation-frames_3: 2102635254
-      cartoon-element-animation-frames_4: 480298721
-      cartoon-element-animation-frames_5: 539148609
-      cartoon-element-animation-frames_6: -433196027
-      cartoon-element-animation-frames_7: -1749788906
-      cartoon-element-animation-frames_8: 878689559
+      Waters_0: -1852198576
+      Waters_1: 558830027
+      Waters_2: 363730352
+      Waters_3: -898605675
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
