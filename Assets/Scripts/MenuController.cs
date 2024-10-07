@@ -5,25 +5,32 @@ using UnityEngine.SceneManagement;
 
 public class MenuController : MonoBehaviour
 {
-    private GameObject GameController;
+    private GameController _gameController;
+    private GameObject GameControllerObj;
 
     // Start is called before the first frame update
     void Start()
     {
-        GameController = GameObject.Find("GameController");
+        if (_gameController == null)
+            _gameController = FindObjectOfType<GameController>();
+        _gameController.setCurrentLevel(0);
+
+        GameControllerObj = GameObject.Find("GameController");
         showCompletedLevels();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public void startButtonClicked()
     {
-        DontDestroyOnLoad(GameController);
-        SceneManager.LoadScene("Level1");
+        DontDestroyOnLoad(GameControllerObj);
+        _gameController.setCurrentLevel(1);
+        _gameController.currentLevelIndex = 2;
+        SceneManager.LoadScene("Level1"); //Change to the level selected
     }
 
     private void showCompletedLevels()
