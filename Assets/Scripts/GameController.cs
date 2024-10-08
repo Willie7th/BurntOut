@@ -14,7 +14,12 @@ public class GameController : MonoBehaviour
 
     public bool pauseMenuOpen = false;
 
+    public GameObject gameUIPrefab;
+
     private GameObject GameControllerObj;
+
+    private FlameController _flameController;
+
 
     // Start is called before the first frame update
     void Start()
@@ -32,7 +37,6 @@ public class GameController : MonoBehaviour
                 DontDestroyOnLoad(GameControllerObj);
                 SceneManager.LoadScene("Pause", LoadSceneMode.Additive); //Change to the level selected
                 pauseMenuOpen = true;
-                
             }
             
         }
@@ -47,6 +51,46 @@ public class GameController : MonoBehaviour
     {
         currentLevel = level;
         Debug.Log("Current level: " + currentLevel);
+    }
+
+    public void levelLoaded(int level)
+    {
+        Debug.Log("Attempting to load scene: " + level);
+        StartCoroutine(WaitForSceneLoad(level));
+    }
+
+    IEnumerator WaitForSceneLoad(int level)
+    {
+        switch(level)
+        {
+            case 1: 
+                AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("Level1");
+                while (!asyncLoad.isDone)
+                {
+                    yield return null;
+                }
+                Debug.Log("Scene '" + level + "' loaded successfully.");
+                GameObject gameUIInstance = Instantiate(gameUIPrefab);
+                currentLevel = 1;
+
+                //Unique code:
+                GameUIController gameUIController = gameUIInstance.GetComponent<GameUIController>();
+
+                //Set timer to 10 minutes (600 seconds)
+                gameUIController.SetTimer(300f);  // 10 minutes in seconds
+
+                _flameController = FindObjectOfType<FlameController>();
+                _flameController.setFlameEnergy(500);
+                
+                break;
+            default:
+                break;
+        }
+    }
+
+    public void timeout()
+    {
+        Debug.Log("Time is up");
     }
     
 

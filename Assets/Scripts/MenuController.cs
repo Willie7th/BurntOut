@@ -28,9 +28,10 @@ public class MenuController : MonoBehaviour
     public void startButtonClicked()
     {
         DontDestroyOnLoad(GameControllerObj);
-        _gameController.setCurrentLevel(1);
-        _gameController.currentLevelIndex = 2;
-        SceneManager.LoadScene("Level1"); //Change to the level selected
+        //_gameController.setCurrentLevel(1);
+        _gameController.currentLevelIndex = 1;
+        //SceneManager.LoadScene("Level1"); //Change to the level selected
+        _gameController.levelLoaded(1);
     }
 
     private void showCompletedLevels()

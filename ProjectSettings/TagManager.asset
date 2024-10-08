@@ -3,7 +3,11 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - stone_walls
+  - metal_1
+  - bg
+  - paths
   layers:
   - Default
   - TransparentFX
@@ -43,6 +47,9 @@ TagManager:
     locked: 0
   - name: Background
     uniqueID: 1363933405
+    locked: 0
+  - name: Walls
+    uniqueID: 1092092261
     locked: 0
   - name: Character
     uniqueID: 852795555

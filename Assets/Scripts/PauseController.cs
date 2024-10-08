@@ -9,6 +9,7 @@ public class PauseController : MonoBehaviour
     public TextMeshProUGUI levelLabel;
 
     private GameController _gameController;
+    private GameUIController _gameUIController;
     private GameObject GameControllerObj;
 
     // Start is called before the first frame update
@@ -17,10 +18,13 @@ public class PauseController : MonoBehaviour
         if (_gameController == null)
             _gameController = FindObjectOfType<GameController>();
 
+        if (_gameUIController == null)
+            _gameUIController = FindObjectOfType<GameUIController>();
+
         GameControllerObj = GameObject.Find("GameController");
         string label = "Paused - Level " + _gameController.getCurrentLevel();
         levelLabel.text = label;
-
+        _gameUIController.setTimerRunning(false);
 
     }
 
@@ -35,6 +39,7 @@ public class PauseController : MonoBehaviour
         Debug.Log("Resume button clicked");
         SceneManager.UnloadSceneAsync(1);
         _gameController.pauseMenuOpen = false;
+        _gameUIController.setTimerRunning(true);
     }
 
     public void retryButton()
@@ -42,7 +47,10 @@ public class PauseController : MonoBehaviour
         Debug.Log("Retry button clicked");
         _gameController.pauseMenuOpen = false;
         SceneManager.UnloadSceneAsync(_gameController.currentLevelIndex);
-        SceneManager.LoadScene(_gameController.currentLevelIndex, LoadSceneMode.Single);
+        Debug.Log("Current Level: " + _gameController.currentLevelIndex);
+        _gameController.levelLoaded(_gameController.currentLevelIndex);
+        //SceneManager.LoadScene(_gameController.currentLevelIndex, LoadSceneMode.Single);
+        _gameUIController.setTimerRunning(true);
     }
 
     public void MenuButton()
@@ -52,5 +60,6 @@ public class PauseController : MonoBehaviour
         SceneManager.LoadScene(0, LoadSceneMode.Single);
         Debug.Log("Loading Main Menu");
         _gameController.pauseMenuOpen = false;
+        _gameUIController.setTimerRunning(true);
     }
 }

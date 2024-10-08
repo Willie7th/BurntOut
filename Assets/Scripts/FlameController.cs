@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class FlameMovement : MonoBehaviour
+public class FlameController : MonoBehaviour
 {
     public int speed = 5;
     private Rigidbody2D characterBody;
@@ -129,5 +129,10 @@ public class FlameMovement : MonoBehaviour
     private void changeColour()
     {
 
+    }
+
+    public void setFlameEnergy(double inEnergy)
+    {
+        energy = inEnergy;
     }
 }
