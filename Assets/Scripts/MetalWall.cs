@@ -43,10 +43,17 @@ public class MetalWall : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        // if (collision.gameObject.CompareTag("Player") && !isMelting)
-        // {
+         if (!isMelting)
+        {
             StartMelting();
-        // }
+
+            //SUBTRACT FLAME HEATLH
+            // FlameController flame = collision.gameObject.GetComponent<Flame>();
+            // if (flame != null)
+            // {
+            //     // flame.ReduceHealth(damageAmount);
+            // }
+        }
     }
 
     void StartMelting()
