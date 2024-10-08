@@ -35,7 +35,7 @@ public class FlameController : MonoBehaviour
             previousInputMovement = inputMovement;
         }
 
-        energyLabel.text = (int) energy + "";  //Counter for now to track energy
+        //energyLabel.text = (int) energy + "";  //Counter for now to track energy
 
         if (Input.GetKeyDown(KeyCode.E))
         {
