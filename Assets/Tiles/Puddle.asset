@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13b75c95f34a00d4e8c04f76b73312e6, type: 3}
+  m_Name: Puddle
+  m_EditorClassIdentifier: 
+  m_AnimatedSprites:
+  - {fileID: -1304917264, guid: bdc5dac377806914ebc9fc01d3da9ea5, type: 3}
+  - {fileID: 1883144870, guid: bdc5dac377806914ebc9fc01d3da9ea5, type: 3}
+  - {fileID: 970749294, guid: bdc5dac377806914ebc9fc01d3da9ea5, type: 3}
+  - {fileID: 1495006852, guid: bdc5dac377806914ebc9fc01d3da9ea5, type: 3}
+  - {fileID: 762952732, guid: bdc5dac377806914ebc9fc01d3da9ea5, type: 3}
+  - {fileID: 716647735, guid: bdc5dac377806914ebc9fc01d3da9ea5, type: 3}
+  - {fileID: -2031214348, guid: bdc5dac377806914ebc9fc01d3da9ea5, type: 3}
+  - {fileID: 814919121, guid: bdc5dac377806914ebc9fc01d3da9ea5, type: 3}
+  - {fileID: 788185795, guid: bdc5dac377806914ebc9fc01d3da9ea5, type: 3}
+  - {fileID: -1005356932, guid: bdc5dac377806914ebc9fc01d3da9ea5, type: 3}
+  - {fileID: -886793001, guid: bdc5dac377806914ebc9fc01d3da9ea5, type: 3}
+  - {fileID: -840968905, guid: bdc5dac377806914ebc9fc01d3da9ea5, type: 3}
+  - {fileID: 1753502240, guid: bdc5dac377806914ebc9fc01d3da9ea5, type: 3}
+  - {fileID: -858974925, guid: bdc5dac377806914ebc9fc01d3da9ea5, type: 3}
+  - {fileID: 347978462, guid: bdc5dac377806914ebc9fc01d3da9ea5, type: 3}
+  m_MinSpeed: 4
+  m_MaxSpeed: 4
+  m_AnimationStartTime: 0
+  m_AnimationStartFrame: 0
+  m_TileColliderType: 1
+  m_TileAnimationFlags: 0
