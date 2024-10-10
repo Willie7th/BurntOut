@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class FlameController : MonoBehaviour
 {
@@ -15,7 +16,9 @@ public class FlameController : MonoBehaviour
 
     public TextMeshProUGUI energyLabel;
 
-    private double energy = 1000;
+    public double energy = 1000;  //Some stage make private set but public get
+
+    public string flameType = "default";
 
     void Start()
     {
@@ -67,10 +70,15 @@ public class FlameController : MonoBehaviour
     void OnTriggerEnter2D(Collider2D col)
     {
         Debug.Log("Trigger enter");
+
         if(col.gameObject.name == "Ember")
         {
             pickUPEmber(col.gameObject);
         }
+    }   
+
+    public void meltFlame()
+    {
         
     }
 
@@ -134,5 +142,10 @@ public class FlameController : MonoBehaviour
     public void setFlameEnergy(double inEnergy)
     {
         energy = inEnergy;
+    }
+
+    public double getFlameEnergy()
+    {
+        return energy;
     }
 }
