@@ -8,6 +8,7 @@ TagManager:
   - metal_1
   - bg
   - paths
+  - water
   layers:
   - Default
   - TransparentFX
