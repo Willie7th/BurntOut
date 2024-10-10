@@ -17,11 +17,11 @@ MonoBehaviour:
   description: 'Starting Room of a level '
   preview: {fileID: 0}
   dependencies:
-  - dependency: {fileID: 11400000, guid: db50daf8cafd39f46b35d48ae95d1eb9, type: 2}
+  - dependency: {fileID: 11400000, guid: 5c2fd386cbd6e585a9056b1db8c2ea41, type: 2}
     instantiationMode: 1
-  - dependency: {fileID: 11400000, guid: 287e63dc65540ae4392f817a7609323e, type: 2}
+  - dependency: {fileID: 11400000, guid: d75d162d4d261ea49a67d1b72aeaa0fd, type: 2}
     instantiationMode: 1
-  - dependency: {fileID: 11400000, guid: ea6af55201bcfae47b1218f7b1bc2dcb, type: 2}
+  - dependency: {fileID: 11400000, guid: 42acf6e0d88661b808d83787cb6aa93c, type: 2}
     instantiationMode: 1
   - dependency: {fileID: 8124588793927950101, guid: c29497eb5df2b8c448d2703c9e4d7470, type: 3}
     instantiationMode: 1
@@ -29,22 +29,34 @@ MonoBehaviour:
     instantiationMode: 0
   - dependency: {fileID: 2460328542801419492, guid: 8680f2cd99324e94c8bca845fa88f5d6, type: 3}
     instantiationMode: 0
+  - dependency: {fileID: 11400000, guid: 3edec64eddcefcd45b7eeb1ccb9524f7, type: 2}
+    instantiationMode: 1
   - dependency: {fileID: 2100000, guid: 0be0f1a50073ddbd8963701c35ebe32c, type: 2}
     instantiationMode: 0
+  - dependency: {fileID: 11400000, guid: 859e80e40c8d67dc5884b683f9e4937a, type: 2}
+    instantiationMode: 1
   - dependency: {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
     instantiationMode: 0
-  - dependency: {fileID: 11400000, guid: 4523b3f042423274b83d17e563594720, type: 2}
+  - dependency: {fileID: 11400000, guid: 55da3d393d602b220a9a0e57b842d370, type: 2}
     instantiationMode: 1
-  - dependency: {fileID: 11400000, guid: 1bd701b61dc738a469d3125980d8533c, type: 2}
+  - dependency: {fileID: 2800000, guid: 2a08ad322cefc8942b1f7b17e7200442, type: 3}
+    instantiationMode: 0
+  - dependency: {fileID: 11400000, guid: f3f20ca94b547e253830ae3cbd76a0b0, type: 2}
     instantiationMode: 1
-  - dependency: {fileID: 2800000, guid: 20b68d5680297556ca88ffcc851e586b, type: 3}
+  - dependency: {fileID: 2800000, guid: 85ab59c1fef60e4d9b763239390be6ef, type: 3}
+    instantiationMode: 0
+  - dependency: {fileID: 2800000, guid: 8857e31fbc15dba44af313fbbd81de1d, type: 3}
     instantiationMode: 0
   - dependency: {fileID: 2100000, guid: 4f2461b7bcdc12d75b7f68ddb8f5e301, type: 2}
     instantiationMode: 0
+  - dependency: {fileID: 2800000, guid: 20b68d5680297556ca88ffcc851e586b, type: 3}
+    instantiationMode: 0
+  - dependency: {fileID: 2800000, guid: 7bcd2ea42f9ba394b91b80aa17cc1214, type: 3}
+    instantiationMode: 0
+  - dependency: {fileID: 2327662058907862849, guid: 89e9d9290aeed2545b6f285e099e83db, type: 3}
+    instantiationMode: 0
   - dependency: {fileID: 2100000, guid: bf25249dc4286c47281953d5b18f4a38, type: 2}
     instantiationMode: 0
-  - dependency: {fileID: 2800000, guid: c96956b3a587f3444b975a8926349bd2, type: 3}
-    instantiationMode: 1
   templatePipeline: {fileID: 0}
   badge: {fileID: 0}
   addToDefaults: 0

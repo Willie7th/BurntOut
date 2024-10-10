@@ -9909,7 +9909,6 @@ GameObject:
   - component: {fileID: 8160309214752340752}
   - component: {fileID: 1150724334659696158}
   - component: {fileID: 653579485014450525}
-  - component: {fileID: 3580190546925783979}
   m_Layer: 0
   m_Name: Flame
   m_TagString: Untagged
@@ -10066,8 +10065,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.059999973, y: 0.07250942}
-  m_Size: {x: 1.5, y: 2.5371666}
+  m_Offset: {x: 0.086269185, y: -7.8933463}
+  m_Size: {x: 5.047931, y: 9.183476}
   m_Direction: 0
 --- !u!1 &8381485689047616417
 GameObject:
