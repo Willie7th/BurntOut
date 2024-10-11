@@ -19,12 +19,12 @@ public class GameUIController : MonoBehaviour
     void Start()
     {
         if (_gameController == null)
-            _gameController = FindObjectOfType<GameController>();
+            _gameController = FindAnyObjectByType<GameController>();
 
-        _flameController = FindObjectOfType<FlameController>();
+        _flameController = FindAnyObjectByType<FlameController>();
 
         if (_soundManager == null)
-            _soundManager = FindObjectOfType<SoundManager>();
+            _soundManager = FindAnyObjectByType<SoundManager>();
     }
 
     public void setTimerRunning(bool state)

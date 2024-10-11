@@ -3,11 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using UnityEngine.Rendering.Universal;
 
 public class FlameController : MonoBehaviour
 {
     public int speed = 5;
     private Rigidbody2D characterBody;
+    private ParticleSystem FlameAlpha;
+    private ParticleSystem FlameAdd;
+    private ParticleSystem FlameGlow;
+    private ParticleSystem FlameSparks;
+    private Light2D FlameLight;
     private Vector2 velocity;
     private Vector2 inputMovement;
     private Vector2 previousInputMovement = new Vector2(0f, 0f);
@@ -21,18 +27,41 @@ public class FlameController : MonoBehaviour
 
     public string flameType = "default";
 
+    private static GradientAlphaKey[] ALPHA_KEYS = new GradientAlphaKey[3] {
+        new GradientAlphaKey(0.0f, 0.0f),
+        new GradientAlphaKey(1.0f, 0.3f),
+        new GradientAlphaKey(0.0f, 1.0f)
+    };
+
+    public Color AluminumColor = new Color(0.14f, 0.76f, 0.92f, 1.0f);
+    public Gradient AluminumGradient = new Gradient()
+    {
+        colorKeys = new GradientColorKey[2] {
+            new GradientColorKey(new Color(0.14f, 0.76f, 0.92f, 1.0f), 0.3f),
+            new GradientColorKey(new Color(0.08f, 0.15f, 0.54f, 1.0f), 0.6f),
+        },
+        alphaKeys = ALPHA_KEYS
+    };
+
+
     void Start()
     {
         velocity = new Vector2(speed, speed);
         characterBody = GetComponent<Rigidbody2D>();
 
         if (_gameController == null)
-            _gameController = FindObjectOfType<GameController>();
+            _gameController = FindAnyObjectByType<GameController>();
+        
+        FlameLight = this.transform.GetChild(1).gameObject.GetComponent<Light2D>();
+        FlameAlpha = this.transform.GetChild(2).gameObject.GetComponent<ParticleSystem>();
+        FlameAdd = this.transform.GetChild(3).gameObject.GetComponent<ParticleSystem>();
+        FlameGlow = this.transform.GetChild(4).gameObject.GetComponent<ParticleSystem>();
+        FlameSparks = this.transform.GetChild(5).gameObject.GetComponent<ParticleSystem>();
     }
 
     void Update()
     {
-        inputMovement = new Vector2 (
+        inputMovement = new Vector2(
             Input.GetAxisRaw("Horizontal"),
             Input.GetAxisRaw("Vertical")
         );
@@ -73,7 +102,7 @@ public class FlameController : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        Debug.Log("Trigger enter");
+        Debug.Log("Trigger enter " + col.gameObject.name);
 
         string colName = col.gameObject.name;
 
@@ -81,11 +110,9 @@ public class FlameController : MonoBehaviour
         {
             pickUPEmber(col.gameObject);
         }
-
-        if(colName == "IronOre")
+        else if (colName == "AlluminumOre")
         {
-            //Code to change colour;
-            //flameColour = blue;
+            changeColour(AluminumGradient, AluminumColor);
         }
 
         if(colName == "Finish")
@@ -96,12 +123,12 @@ public class FlameController : MonoBehaviour
 
     public void meltFlame()
     {
-        
+
     }
 
     private void flameJump()
     {
-        if(energy < 30)
+        if (energy < 30)
         {
             Debug.Log("Too small to drop ember");
             return;
@@ -112,7 +139,7 @@ public class FlameController : MonoBehaviour
 
     private void flameSplit()
     {
-        if(energy < 80)
+        if (energy < 80)
         {
             Debug.Log("Too small to split ember");
             return;
@@ -123,7 +150,7 @@ public class FlameController : MonoBehaviour
 
     private void dropEmber()
     {
-        if(energy < 30)
+        if (energy < 30)
         {
             Debug.Log("Too small to drop ember");
             return;
@@ -151,9 +178,18 @@ public class FlameController : MonoBehaviour
         energy = energy + 30;
     }
 
-    private void changeColour()
+    private void changeColour(Gradient grad, Color lightColor)
     {
-
+        Debug.Log("Changing colour");
+        var colAlpha = FlameAlpha.colorOverLifetime;
+        colAlpha.color = grad;
+        var colAdd = FlameAdd.colorOverLifetime;
+        colAdd.color = grad;
+        var colGlow = FlameGlow.colorOverLifetime;
+        colGlow.color = grad;
+        var colSparks = FlameSparks.colorOverLifetime;
+        colSparks.color = grad;
+        FlameLight.color = lightColor;
     }
 
     public void setFlameEnergy(double inEnergy)

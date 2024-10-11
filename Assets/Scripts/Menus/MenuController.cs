@@ -26,11 +26,11 @@ public class MenuController : MonoBehaviour
     void Start()
     {
         if (_gameController == null)
-            _gameController = FindObjectOfType<GameController>();
+            _gameController = FindAnyObjectByType<GameController>();
         _gameController.setCurrentLevel(0);
 
         if (_soundManager == null)
-            _soundManager = FindObjectOfType<SoundManager>();
+            _soundManager = FindAnyObjectByType<SoundManager>();
 
         loadLevels();
 

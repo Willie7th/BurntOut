@@ -39,7 +39,7 @@ public class GameController : MonoBehaviour
         DontDestroyOnLoad(GameControllerObj);
 
         if (_soundManager == null)
-            _soundManager = FindObjectOfType<SoundManager>();
+            _soundManager = FindAnyObjectByType<SoundManager>();
     }
 
     // Update is called once per frame
@@ -116,7 +116,7 @@ public class GameController : MonoBehaviour
         switch(level)
         {
             case 1: 
-                AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("Level1");
+                AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("Level_1");
                 while (!asyncLoad.isDone)
                 {
                     yield return null;
@@ -127,13 +127,13 @@ public class GameController : MonoBehaviour
 
                 //Unique code:
                 //GameUIController gameUIController = gameUIInstance.GetComponent<GameUIController>();
-                _gameUIController = FindObjectOfType<GameUIController>();
+                _gameUIController = FindAnyObjectByType<GameUIController>();
 
                 //Set timer to 10 minutes (600 seconds)
                 _gameUIController.SetTimer(15f);  // 10 minutes in seconds
                 levelStartTime = 15f;
 
-                _flameController = FindObjectOfType<FlameController>();
+                _flameController = FindAnyObjectByType<FlameController>();
                 _flameController.setFlameEnergy(500);
                 levelStartEnergy = 500;
                 

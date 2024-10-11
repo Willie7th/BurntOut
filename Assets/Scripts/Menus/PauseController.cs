@@ -19,13 +19,13 @@ public class PauseController : MonoBehaviour
     void Start()
     {
         if (_gameController == null)
-            _gameController = FindObjectOfType<GameController>();
+            _gameController = FindAnyObjectByType<GameController>();
 
         if (_gameUIController == null)
-            _gameUIController = FindObjectOfType<GameUIController>();
+            _gameUIController = FindAnyObjectByType<GameUIController>();
 
         if (_soundManager == null)
-            _soundManager = FindObjectOfType<SoundManager>();
+            _soundManager = FindAnyObjectByType<SoundManager>();
 
         string label = "Paused - Level " + _gameController.getCurrentLevel();
         levelLabel.text = label;

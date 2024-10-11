@@ -16,10 +16,10 @@ public class GameOverController : MonoBehaviour
     void Start()
     {
         if (_gameController == null)
-            _gameController = FindObjectOfType<GameController>();
+            _gameController = FindAnyObjectByType<GameController>();
 
         if (_soundManager == null)
-            _soundManager = FindObjectOfType<SoundManager>();
+            _soundManager = FindAnyObjectByType<SoundManager>();
 
         //GameControllerObj = GameObject.Find("GameController");
 
