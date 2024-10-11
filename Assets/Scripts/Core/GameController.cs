@@ -64,7 +64,7 @@ public class GameController : MonoBehaviour
         switch(level)
         {
             case 1: 
-                AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("Level1");
+                AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("Level_1");
                 while (!asyncLoad.isDone)
                 {
                     yield return null;
