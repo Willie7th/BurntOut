@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &2319897246319238785
+--- !u!1 &6224148084046216489
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,25 +8,25 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 8758924324861269265}
-  - component: {fileID: 7678347138261423116}
-  - component: {fileID: 8085188786195645847}
-  - component: {fileID: 4213724179694174567}
-  - component: {fileID: 2459314535699136804}
+  - component: {fileID: 2957917280564457116}
+  - component: {fileID: 2114184886865631362}
+  - component: {fileID: 5724187947746876832}
+  - component: {fileID: 6974679732456319696}
+  - component: {fileID: 3432909153628620710}
   m_Layer: 0
-  m_Name: CopperWall
+  m_Name: AlluminumWall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &8758924324861269265
+--- !u!4 &2957917280564457116
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2319897246319238785}
+  m_GameObject: {fileID: 6224148084046216489}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -4.251623, y: 0.08638787, z: 4}
@@ -35,13 +35,13 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &7678347138261423116
+--- !u!212 &2114184886865631362
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2319897246319238785}
+  m_GameObject: {fileID: 6224148084046216489}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -79,7 +79,7 @@ SpriteRenderer:
   m_SortingLayerID: 1092092261
   m_SortingLayer: 2
   m_SortingOrder: 0
-  m_Sprite: {fileID: 4117630481118784474, guid: 9bb62d2688543e141844caebdf8537e3, type: 3}
+  m_Sprite: {fileID: -4052646714520247069, guid: ad4125670c1f6ad4eae9474fae2f5c4a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -90,13 +90,13 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!61 &8085188786195645847
+--- !u!61 &5724187947746876832
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2319897246319238785}
+  m_GameObject: {fileID: 6224148084046216489}
   m_Enabled: 1
   serializedVersion: 3
   m_Density: 1
@@ -136,36 +136,36 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &4213724179694174567
+--- !u!114 &6974679732456319696
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2319897246319238785}
+  m_GameObject: {fileID: 6224148084046216489}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6dd4f981582deb741aa39a6a2467dc2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  solidSprite: {fileID: 4117630481118784474, guid: 9bb62d2688543e141844caebdf8537e3, type: 3}
+  solidSprite: {fileID: -4052646714520247069, guid: ad4125670c1f6ad4eae9474fae2f5c4a, type: 3}
   meltingSprites:
-  - {fileID: -3821583478525726684, guid: 7be1eff7e542cf243b31b6072428060e, type: 3}
-  - {fileID: -3140423161898589447, guid: 7be1eff7e542cf243b31b6072428060e, type: 3}
-  - {fileID: 230773819153250326, guid: 7be1eff7e542cf243b31b6072428060e, type: 3}
-  - {fileID: -760064642791679285, guid: 7be1eff7e542cf243b31b6072428060e, type: 3}
-  - {fileID: -491770400811670187, guid: 7be1eff7e542cf243b31b6072428060e, type: 3}
-  - {fileID: -1203993044, guid: 7be1eff7e542cf243b31b6072428060e, type: 3}
-  meltedSprite: {fileID: -310526952, guid: 7be1eff7e542cf243b31b6072428060e, type: 3}
-  meltingDuration: 2
---- !u!50 &2459314535699136804
+  - {fileID: -932095525700604240, guid: 4c81de39fc9658a448734ca06bcbb75b, type: 3}
+  - {fileID: -444860317, guid: 4c81de39fc9658a448734ca06bcbb75b, type: 3}
+  - {fileID: 761658227, guid: 4c81de39fc9658a448734ca06bcbb75b, type: 3}
+  - {fileID: 669846380, guid: 4c81de39fc9658a448734ca06bcbb75b, type: 3}
+  - {fileID: 6887362834747625983, guid: 4c81de39fc9658a448734ca06bcbb75b, type: 3}
+  - {fileID: -1484745731541202078, guid: 4c81de39fc9658a448734ca06bcbb75b, type: 3}
+  meltedSprite: {fileID: 7539689421879022630, guid: 4c81de39fc9658a448734ca06bcbb75b, type: 3}
+  meltingDuration: 1
+--- !u!50 &3432909153628620710
 Rigidbody2D:
   serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2319897246319238785}
+  m_GameObject: {fileID: 6224148084046216489}
   m_BodyType: 2
   m_Simulated: 1
   m_UseFullKinematicContacts: 0

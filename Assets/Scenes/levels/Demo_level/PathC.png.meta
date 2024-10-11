@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: dc36e7eae05987f4cac5ac23fcb73af6
+guid: d4971381ff1f4e64384856211bd14da7
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 2515979897999178100
-    second: black-textured-background_0
+      213: -1130740300202343021
+    second: PathC_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -51,7 +51,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 64
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -126,13 +126,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: black-textured-background_0
+      name: PathC_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 5472
-        height: 3648
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -141,8 +141,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 479b342136e8ae220800000000000000
-      internalID: 2515979897999178100
+      spriteID: 395883910bdce40f0800000000000000
+      internalID: -1130740300202343021
       vertices: []
       indices: 
       edges: []
@@ -161,7 +161,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      black-textured-background_0: 2515979897999178100
+      PathC_0: -1130740300202343021
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
