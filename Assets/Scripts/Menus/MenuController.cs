@@ -9,9 +9,7 @@ using UnityEngine.UI;
 public class MenuController : MonoBehaviour
 {
     private GameController _gameController;
-    private GameObject GameControllerObj;
     private SoundManager _soundManager;
-    private GameObject SoundManagerObj;
 
     [SerializeField] private AudioClip buttonClickAudio;
     [SerializeField] private AudioClip startClickAudio;
@@ -20,7 +18,6 @@ public class MenuController : MonoBehaviour
     public Sprite flameSprite;
     public float delayBetweenFlameChanges = 0.5f;
     public List<Button> levelButtons;
-    private string saveFilePath;
     public Button startButton;
 
     private int selectedLevel = 0;
@@ -35,15 +32,18 @@ public class MenuController : MonoBehaviour
         if (_soundManager == null)
             _soundManager = FindObjectOfType<SoundManager>();
 
-        GameControllerObj = GameObject.Find("GameController");
-        SoundManagerObj = GameObject.Find("SoundManager");
+        loadLevels();
 
+        _soundManager.PlayBackgroundMusic("Audio/BackgroundMusic/MenuBackground", 0.1f);
+        
+        /*
         saveFilePath = Path.Combine(Application.dataPath, "SaveData/levels.txt");
 
         if (File.Exists(saveFilePath))
         {
-            string levelsCompletedData = File.ReadAllText(saveFilePath);
-            List<int> completedLevels = ParseCompletedLevels(levelsCompletedData);
+            //string levelsCompletedData = File.ReadAllText(saveFilePath);
+            //List<int> completedLevels = ParseCompletedLevels(levelsCompletedData);
+            List<int> completedLevels = _gameController.getCompletedLevels();
 
             int maxInteractableLevel = Mathf.Min(completedLevels.Count + 1, 7); // Current level is the next after completed ones
 
@@ -60,6 +60,23 @@ public class MenuController : MonoBehaviour
         {
             Debug.LogWarning("levels.txt not found!");
         }
+        */
+    }
+
+    private void loadLevels()
+    {
+        List<int> completedLevels = _gameController.getCompletedLevels();
+
+        int maxInteractableLevel = Mathf.Min(completedLevels.Count + 1, 7); // Current level is the next after completed ones
+
+        // Make buttons interactable for completed and current levels
+        for (int i = 0; i < levelButtons.Count; i++)
+        {
+            levelButtons[i].interactable = (i + 1) <= maxInteractableLevel;
+        }
+
+            // Start the coroutine to tick off completed levels one by one
+        StartCoroutine(ChangeFlameSprites(completedLevels));
     }
 
     private IEnumerator ChangeFlameSprites(List<int> completedLevels)
@@ -109,8 +126,8 @@ public class MenuController : MonoBehaviour
         if(selectedLevel > 0)
         {
             _soundManager.PlaySound(startClickAudio, 1f);
-             DontDestroyOnLoad(GameControllerObj);
-             DontDestroyOnLoad(SoundManagerObj);
+             //DontDestroyOnLoad(GameControllerObj);
+             //DontDestroyOnLoad(SoundManagerObj);
             //_gameController.setCurrentLevel(1);
             _gameController.currentLevelIndex = selectedLevel;
             //SceneManager.LoadScene("Level1"); //Change to the level selected

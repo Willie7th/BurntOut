@@ -321,6 +321,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timerText: {fileID: 8035432063510124239}
   energyText: {fileID: 4246089190444875242}
+  timeTickAudio: {fileID: 8300000, guid: 0f91cc183bf98a4429f240fb5580bf3e, type: 3}
 --- !u!1 &7113960937480851182
 GameObject:
   m_ObjectHideFlags: 0

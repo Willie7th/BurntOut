@@ -510,6 +510,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelLabel: {fileID: 1577182468}
+  buttonClickAudio: {fileID: 8300000, guid: 54cb9e36c8b534a4aaaafaadf46dae27, type: 3}
+  retryClickAudio: {fileID: 8300000, guid: 7da8f9db06c66614486e6d203a6a03fd, type: 3}
 --- !u!1 &730004922
 GameObject:
   m_ObjectHideFlags: 0

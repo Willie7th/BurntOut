@@ -127,9 +127,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
+        y: 145
         width: 222
-        height: 406
+        height: 261
       alignment: 9
       pivot: {x: 0.60101014, y: 0.20559832}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -150,7 +150,7 @@ TextureImporter:
         x: 220
         y: 137
         width: 222
-        height: 386
+        height: 413
       alignment: 9
       pivot: {x: 0.49999985, y: 0.221929}
       border: {x: 0, y: 1, z: 0, w: 0}
@@ -190,9 +190,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 666
-        y: 0
-        width: 222.22223
-        height: 1111
+        y: 147
+        width: 222
+        height: 579
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -211,9 +211,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 888
-        y: 0
-        width: 222.22223
-        height: 1111
+        y: 152
+        width: 269
+        height: 640
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -231,10 +231,10 @@ TextureImporter:
       name: cartoon-element-animation-frames_5
       rect:
         serializedVersion: 2
-        x: 1110
-        y: 0
-        width: 222.22223
-        height: 1111
+        x: 1157
+        y: 152
+        width: 285
+        height: 837
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -252,9 +252,9 @@ TextureImporter:
       name: cartoon-element-animation-frames_6
       rect:
         serializedVersion: 2
-        x: 1332
+        x: 1999
         y: 0
-        width: 222.22223
+        width: 1
         height: 1111
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -273,10 +273,10 @@ TextureImporter:
       name: cartoon-element-animation-frames_7
       rect:
         serializedVersion: 2
-        x: 1554
-        y: 0
-        width: 222.22223
-        height: 1111
+        x: 1442
+        y: 162
+        width: 223
+        height: 475
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -294,10 +294,10 @@ TextureImporter:
       name: cartoon-element-animation-frames_8
       rect:
         serializedVersion: 2
-        x: 1776
-        y: 0
-        width: 222.22223
-        height: 1111
+        x: 1687
+        y: 161
+        width: 159
+        height: 319
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -307,6 +307,27 @@ TextureImporter:
       bones: []
       spriteID: 76a0bfd026a49144da32c7aef171f816
       internalID: 878689559
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cartoon-element-animation-frames_1
+      rect:
+        serializedVersion: 2
+        x: 1849
+        y: 162
+        width: 91
+        height: 155
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d838e5daad48ad44abff1c3cdd1e96a3
+      internalID: -508106156
       vertices: []
       indices: 
       edges: []
@@ -324,6 +345,7 @@ TextureImporter:
     nameFileIdTable:
       Fire: 1490274783
       cartoon-element-animation-frames_0: -641543513
+      cartoon-element-animation-frames_1: -508106156
       cartoon-element-animation-frames_3: 2102635254
       cartoon-element-animation-frames_4: 480298721
       cartoon-element-animation-frames_5: 539148609

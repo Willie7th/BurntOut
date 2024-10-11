@@ -13,6 +13,7 @@ public class FlameController : MonoBehaviour
     private Vector2 previousInputMovement = new Vector2(0f, 0f);
 
     public GameObject emberPrefab;
+    private GameController _gameController;
 
     public TextMeshProUGUI energyLabel;
 
@@ -24,6 +25,9 @@ public class FlameController : MonoBehaviour
     {
         velocity = new Vector2(speed, speed);
         characterBody = GetComponent<Rigidbody2D>();
+
+        if (_gameController == null)
+            _gameController = FindObjectOfType<GameController>();
     }
 
     void Update()
@@ -71,11 +75,24 @@ public class FlameController : MonoBehaviour
     {
         Debug.Log("Trigger enter");
 
-        if(col.gameObject.name == "Ember")
+        string colName = col.gameObject.name;
+
+        if(colName == "Ember")
         {
             pickUPEmber(col.gameObject);
         }
-    }   
+
+        if(colName == "IronOre")
+        {
+            //Code to change colour;
+            //flameColour = blue;
+        }
+
+        if(colName == "Finish")
+        {
+            _gameController.finishLevel();
+        }
+    }
 
     public void meltFlame()
     {
@@ -146,6 +163,7 @@ public class FlameController : MonoBehaviour
 
     public double getFlameEnergy()
     {
-        return energy;
+        int tempEnergy = (int) energy;
+        return tempEnergy;
     }
 }
