@@ -27,6 +27,8 @@ public class FlameController : MonoBehaviour
 
     public string flameType = "default";
 
+    public FlameColour flameColour=FlameColour.none;
+
     private static GradientAlphaKey[] ALPHA_KEYS = new GradientAlphaKey[3] {
         new GradientAlphaKey(0.0f, 0.0f),
         new GradientAlphaKey(1.0f, 0.3f),
@@ -112,7 +114,15 @@ public class FlameController : MonoBehaviour
         }
         else if (colName == "AlluminumOre")
         {
-            changeColour(AluminumGradient, AluminumColor);
+            changeColour(AluminumGradient, AluminumColor,FlameColour.alluminium);
+        }
+        else if (colName == "IronOre")
+        {
+            changeColour(AluminumGradient, AluminumColor,FlameColour.iron);
+        }
+        else if (colName == "CopperOre")
+        {
+            changeColour(AluminumGradient, AluminumColor,FlameColour.copper);
         }
 
         if(colName == "Finish")
@@ -178,18 +188,33 @@ public class FlameController : MonoBehaviour
         energy = energy + 30;
     }
 
-    private void changeColour(Gradient grad, Color lightColor)
+    private void changeColour(Gradient grad, Color lightColor,FlameColour flameColour)
     {
+
         Debug.Log("Changing colour");
-        var colAlpha = FlameAlpha.colorOverLifetime;
-        colAlpha.color = grad;
-        var colAdd = FlameAdd.colorOverLifetime;
-        colAdd.color = grad;
-        var colGlow = FlameGlow.colorOverLifetime;
-        colGlow.color = grad;
-        var colSparks = FlameSparks.colorOverLifetime;
-        colSparks.color = grad;
-        FlameLight.color = lightColor;
+        this.flameColour = flameColour;
+        switch (flameColour)
+        {
+            case FlameColour.copper:
+                break;
+            case FlameColour.iron:
+
+                break;
+            case FlameColour.alluminium:
+                var colAlpha = FlameAlpha.colorOverLifetime;
+                colAlpha.color = grad;
+                var colAdd = FlameAdd.colorOverLifetime;
+                colAdd.color = grad;
+                var colGlow = FlameGlow.colorOverLifetime;
+                colGlow.color = grad;
+                var colSparks = FlameSparks.colorOverLifetime;
+                colSparks.color = grad;
+                FlameLight.color = lightColor;
+                break;
+
+            default:
+                break;
+        }
     }
 
     public void setFlameEnergy(double inEnergy)

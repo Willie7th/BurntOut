@@ -7,10 +7,13 @@ public class MetalWall : MonoBehaviour
     public Sprite meltedSprite;
     public float meltingDuration = 3.0f;
 
+    public FlameColour metalType;
+
     private SpriteRenderer spriteRenderer;
     private float meltingProgress = 0f;
     private bool isMelting = false;
     private int currentMeltingFrame = 0;
+
 
     void Start()
     {
@@ -24,8 +27,7 @@ public class MetalWall : MonoBehaviour
         {
             meltingProgress += Time.deltaTime;
             float progressRatio = meltingProgress / meltingDuration;
-            int frameIndex = Mathf.FloorToInt(progressRatio * meltingSprites.Length);
-
+            int frameIndex = Mathf.FloorToInt(progressRatio * (meltingSprites.Length-1));
             if (frameIndex != currentMeltingFrame)
             {
                 currentMeltingFrame = frameIndex;
@@ -43,9 +45,14 @@ public class MetalWall : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-         if (!isMelting)
+        if (!isMelting)
         {
-            StartMelting();
+            FlameController flameController = collision.gameObject.GetComponent<FlameController>();
+            Debug.Log(metalType+" : " +flameController.flameColour);
+            if (flameController != null && flameController.flameColour == metalType){
+                // flameController.fla
+                StartMelting();
+            }
 
             //SUBTRACT FLAME HEATLH
             // FlameController flame = collision.gameObject.GetComponent<Flame>();

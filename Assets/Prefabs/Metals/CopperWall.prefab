@@ -157,7 +157,8 @@ MonoBehaviour:
   - {fileID: -491770400811670187, guid: 7be1eff7e542cf243b31b6072428060e, type: 3}
   - {fileID: -1203993044, guid: 7be1eff7e542cf243b31b6072428060e, type: 3}
   meltedSprite: {fileID: -310526952, guid: 7be1eff7e542cf243b31b6072428060e, type: 3}
-  meltingDuration: 2
+  meltingDuration: 1
+  metalType: 1
 --- !u!50 &2459314535699136804
 Rigidbody2D:
   serializedVersion: 5
