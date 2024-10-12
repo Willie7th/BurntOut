@@ -6,3 +6,8 @@ public enum FlameColour
     iron,
     alluminium
 }
+
+public enum FlameType{
+    mainFlame,
+    miniFlame
+}

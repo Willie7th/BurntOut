@@ -25,7 +25,9 @@ public class FlameController : MonoBehaviour
 
     public double energy = 1000;  //Some stage make private set but public get
 
-    public string flameType = "default";
+    // public string flameType = "default";
+
+    public FlameType flameType = FlameType.mainFlame;
 
     public FlameColour flameColour=FlameColour.none;
 
@@ -90,6 +92,7 @@ public class FlameController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.M))
         {
             //Mini flame
+            
             flameSplit();
         }
 
@@ -151,10 +154,18 @@ public class FlameController : MonoBehaviour
     {
         if (energy < 80)
         {
+
+            
             Debug.Log("Too small to split ember");
             return;
         }
         Debug.Log("Flame split");
+        //TEMP CODE REMOVE REMOVE REMOVE REMOVE
+        if (this.flameType == FlameType.mainFlame)
+        this.flameType = FlameType.miniFlame;
+        else
+        this.flameType = FlameType.mainFlame;
+        // REMOVE REMOVE REMOVE
         energy = energy - 50;
     }
 
