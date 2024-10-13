@@ -131,11 +131,29 @@ public class GameController : MonoBehaviour
         StartCoroutine(WaitForSceneLoad(level));
     }
 
+    IEnumerator LevelTransition(string sceneName)
+    {
+        Debug.Log("Level transition attempted");
+        LevelLoaderController _levelLoaderController = FindAnyObjectByType<LevelLoaderController>();
+        _levelLoaderController.playAnimation();
+        Debug.Log("Played animation");
+        yield return new WaitForSeconds(1f);
+        Debug.Log("Trying to load scene");
+        SceneManager.LoadScene(sceneName);
+        Debug.Log("Scene loaded");
+    }
+
     IEnumerator WaitForSceneLoad(int level)
     {
+        LevelLoaderController _levelLoaderController = FindAnyObjectByType<LevelLoaderController>();
+        _levelLoaderController.playAnimation();
+
+        yield return new WaitForSeconds(1f);
+
         switch(level)
         {
             case 1: 
+                
                 AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("Level_1");
                 while (!asyncLoad.isDone)
                 {
@@ -183,10 +201,12 @@ public class GameController : MonoBehaviour
 
     public void timeout()
     {
+        
         _soundManager.StopMovementSound();
         _soundManager.StopBackgroundMusic();
         Debug.Log("Time is up");
-        SceneManager.LoadScene("Gameover"); //Change to the level selected
+        StartCoroutine(LevelTransition("Gameover"));
+        //SceneManager.LoadScene("Gameover"); //Change to the level selected
         pauseMenuOpen = true;
 
         //GameObject flame = GameObject.Find("Flame");
@@ -199,7 +219,8 @@ public class GameController : MonoBehaviour
         _soundManager.StopMovementSound();
         _soundManager.StopBackgroundMusic();
         //DontDestroyOnLoad(GameControllerObj);
-        SceneManager.LoadScene(0, LoadSceneMode.Single);
+        StartCoroutine(LevelTransition("Menu"));
+        //SceneManager.LoadScene(0, LoadSceneMode.Single);
         Debug.Log("Loading Main Menu");
         resetStats();
         _soundManager.PlayBackgroundMusic("Audio/BackgroundMusic/MenuBackground", 0.2f);
@@ -211,6 +232,7 @@ public class GameController : MonoBehaviour
         _soundManager.StopBackgroundMusic();
         //DontDestroyOnLoad(GameControllerObj);
         Debug.Log("Current Level: " + currentLevel);
+        //LevelTransition();
         levelLoaded(currentLevel);
     }
 
@@ -223,8 +245,8 @@ public class GameController : MonoBehaviour
 
         
         _gameUIController.setTimerRunning(false);
-
-        SceneManager.LoadScene("LevelComplete"); //Change to the level selected
+        StartCoroutine(LevelTransition("LevelComplete"));
+        //SceneManager.LoadScene("LevelComplete"); //Change to the level selected
         pauseMenuOpen = true;
 
         //GameObject flame = GameObject.Find("Flame");
