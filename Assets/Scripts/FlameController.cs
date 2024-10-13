@@ -29,6 +29,9 @@ public class FlameController : MonoBehaviour
     private bool isMoving = false;
     public bool mainFlame;
 
+    private bool isJumping = false;
+    private Vector2 newTarget;
+
     [SerializeField] private AudioClip flameMoveAudio;
 
     public TextMeshProUGUI energyLabel;
@@ -143,9 +146,18 @@ public class FlameController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Vector2 delta = inputMovement * velocity * Time.deltaTime;
-        Vector2 newPosition = characterBody.position + delta;
-        characterBody.MovePosition(newPosition);
+        if(isJumping)
+        {
+            characterBody.MovePosition(newTarget);
+            
+            isJumping = false;
+        }
+        else{
+            Vector2 delta = inputMovement * velocity * Time.deltaTime;
+            Vector2 newPosition = characterBody.position + delta;
+            characterBody.MovePosition(newPosition);
+        }
+        
     }
 
     void OnTriggerEnter2D(Collider2D col)
@@ -184,6 +196,11 @@ public class FlameController : MonoBehaviour
             Debug.Log("Combining back into flame");
             combineSplitFlame(collision.gameObject);
         }
+        else if(colName == "Water")
+        {
+            Debug.Log("Player Dies");
+        }
+
     }
 
     
@@ -197,11 +214,22 @@ public class FlameController : MonoBehaviour
     {
         if (energy < 30)
         {
-            Debug.Log("Too small to drop ember");
+            Debug.Log("Too small to jump");
             return;
         }
+
+        isJumping = true;
+
+        
+        Vector2 offset = previousInputMovement * 2f;
+        newTarget = characterBody.position + offset;
+        //Debug.Log("New position " + characterBody.position);
+        //this.gameObject.transform.position = 
         Debug.Log("Flame jumped");
         energy = energy * 0.99;
+        
+
+
     }
 
     private void flameSplit()
@@ -228,7 +256,7 @@ public class FlameController : MonoBehaviour
         energy = energy - 10;
 
         Vector3 offset = -previousInputMovement * 0.5f;
-        Debug.Log(previousInputMovement);
+        //Debug.Log(previousInputMovement);
         GameObject emberInstance = Instantiate(emberPrefab, this.gameObject.transform.position + offset, this.gameObject.transform.rotation);  //drop ember at player position
         emberInstance.name = "Ember";
     }
