@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using UnityEngine.Rendering.Universal;
+using UnityEngine.Tilemaps;
 
 public class FlameController : MonoBehaviour
 {
@@ -53,6 +54,7 @@ public class FlameController : MonoBehaviour
         velocity = new Vector2(speed, speed);
         characterBody = GetComponent<Rigidbody2D>();
 
+
         if (_gameController == null)
             _gameController = FindAnyObjectByType<GameController>();
         
@@ -94,6 +96,9 @@ public class FlameController : MonoBehaviour
             //Mini flame
             
             flameSplit();
+
+            CapsuleCollider2D cap =  GetComponent<CapsuleCollider2D>();
+            cap.size = new Vector2(1f,1f);
         }
 
     }
@@ -160,12 +165,6 @@ public class FlameController : MonoBehaviour
             return;
         }
         Debug.Log("Flame split");
-        //TEMP CODE REMOVE REMOVE REMOVE REMOVE
-        if (this.flameType == FlameType.mainFlame)
-        this.flameType = FlameType.miniFlame;
-        else
-        this.flameType = FlameType.mainFlame;
-        // REMOVE REMOVE REMOVE
         energy = energy - 50;
     }
 
