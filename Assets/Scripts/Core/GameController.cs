@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Tilemaps;
 
 public class GameController : MonoBehaviour
 {
@@ -21,6 +22,21 @@ public class GameController : MonoBehaviour
 
     private GameObject GameControllerObj;
 
+    private FlameType flameState;
+
+    public void changeFlameState(){
+        // Assuming this script is on the Grid object
+        TilemapCollider2D crackedWalls = transform.Find("CrackedWalls").GetComponent<TilemapCollider2D>();
+        if (flameState == FlameType.mainFlame){
+            flameState = FlameType.miniFlame;
+            crackedWalls.enabled = false;
+        }
+        else {
+            flameState = FlameType.mainFlame;
+            crackedWalls.enabled = true;
+        }
+    }
+
     private FlameController _flameController;
     private GameUIController _gameUIController;
     private SoundManager _soundManager;
@@ -36,6 +52,10 @@ public class GameController : MonoBehaviour
     void Start()
     {
         GameControllerObj = GameObject.Find("GameController");
+
+        //TODO
+        flameState = FlameType.mainFlame;
+
         DontDestroyOnLoad(GameControllerObj);
 
         if (_soundManager == null)
