@@ -1,10 +1,8 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using UnityEngine.UI;
 using UnityEngine.Rendering.Universal;
-using UnityEngine.Tilemaps;
+
 
 public class FlameController : MonoBehaviour
 {
@@ -41,25 +39,11 @@ public class FlameController : MonoBehaviour
     // public string flameType = "default";
 
     public FlameType flameType = FlameType.mainFlame;
-
-    public FlameColour flameColour=FlameColour.none;
-
-    private static GradientAlphaKey[] ALPHA_KEYS = new GradientAlphaKey[3] {
-        new GradientAlphaKey(0.0f, 0.0f),
-        new GradientAlphaKey(1.0f, 0.3f),
-        new GradientAlphaKey(0.0f, 1.0f)
-    };
-
-    public Color AluminumColor = new Color(0.14f, 0.76f, 0.92f, 1.0f);
-    public Gradient AluminumGradient = new Gradient()
-    {
-        colorKeys = new GradientColorKey[2] {
-            new GradientColorKey(new Color(0.14f, 0.76f, 0.92f, 1.0f), 0.3f),
-            new GradientColorKey(new Color(0.08f, 0.15f, 0.54f, 1.0f), 0.6f),
-        },
-        alphaKeys = ALPHA_KEYS
-    };
-
+    public FlameColour flameColour = FlameColour.iron;
+    private readonly Dictionary<FlameColour, Color> lightColorTable = new();
+    public Color AluminumColor = new(0.14f, 0.76f, 0.92f, 1.0f);
+    public Color CopperColor = new(0.15f, 0.6f, 0.08f, 1.0f);
+    public Color IronColor = new(1.0f, 0.68f, 0.125f, 1.0f);
 
     void Start()
     {
@@ -72,7 +56,7 @@ public class FlameController : MonoBehaviour
 
         if (_soundManager == null)
             _soundManager = FindAnyObjectByType<SoundManager>();
-        
+
         FlameLight = this.transform.GetChild(1).gameObject.GetComponent<Light2D>();
         FlameAlpha = this.transform.GetChild(2).gameObject.GetComponent<ParticleSystem>();
         FlameAdd = this.transform.GetChild(3).gameObject.GetComponent<ParticleSystem>();
@@ -80,6 +64,11 @@ public class FlameController : MonoBehaviour
         FlameSparks = this.transform.GetChild(5).gameObject.GetComponent<ParticleSystem>();
 
         flameCamera = GetComponentInChildren<Camera>();
+
+        // Add flameColor - lightColor mapping
+        lightColorTable.Add(FlameColour.alluminium, AluminumColor);
+        lightColorTable.Add(FlameColour.copper, CopperColor);
+        lightColorTable.Add(FlameColour.iron, IronColor);
     }
 
     void Update()
@@ -110,22 +99,21 @@ public class FlameController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.M))
         {
-            //Mini flame
-            
+            // Mini flame
             flameSplit();
-
-            CapsuleCollider2D cap =  GetComponent<CapsuleCollider2D>();
-            cap.size = new Vector2(1f,1f);
+            CapsuleCollider2D cap = GetComponent<CapsuleCollider2D>();
+            cap.size = new Vector2(1f, 1f);
             SpawnMiniflame();
         }
-
-        
-
-        bool isMovementKeyPressed = 
+        bool isMovementKeyPressed =
             Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D) ||
             Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.UpArrow);
 
-        if (isMovementKeyPressed && !isMoving)
+        if (!_soundManager)
+        {
+            return;
+        }
+        else if (isMovementKeyPressed && !isMoving)
         {
             // Start playing movement sound
             _soundManager.PlayMovementSound(flameMoveAudio, 0.1f);
@@ -139,9 +127,6 @@ public class FlameController : MonoBehaviour
             isMoving = false;
             //Debug.Log("Is moving false");
         }
-
-
-
     }
 
     private void FixedUpdate()
@@ -166,23 +151,23 @@ public class FlameController : MonoBehaviour
 
         string colName = col.gameObject.name;
 
-        if(colName == "Ember")
+        if (colName == "Ember")
         {
             pickUPEmber(col.gameObject);
         }
         else if (colName == "AlluminumOre")
         {
-            changeColour(AluminumGradient, AluminumColor,FlameColour.alluminium);
+            changeColour(FlameColour.alluminium);
         }
         else if (colName == "IronOre")
         {
-            changeColour(AluminumGradient, AluminumColor,FlameColour.iron);
+            changeColour(FlameColour.iron);
         }
         else if (colName == "CopperOre")
         {
-            changeColour(AluminumGradient, AluminumColor,FlameColour.copper);
+            changeColour(FlameColour.copper);
         }
-        else if(colName == "Finish")
+        else if (colName == "Finish")
         {
             _gameController.finishLevel();
         }
@@ -191,7 +176,7 @@ public class FlameController : MonoBehaviour
     void OnCollisionEnter2D(Collision2D collision)
     {
         string colName = collision.gameObject.name;
-        if(colName == "Flame")
+        if (colName == "Flame")
         {
             Debug.Log("Combining back into flame");
             combineSplitFlame(collision.gameObject);
@@ -202,8 +187,6 @@ public class FlameController : MonoBehaviour
         }
 
     }
-
-    
 
     public void meltFlame()
     {
@@ -236,8 +219,6 @@ public class FlameController : MonoBehaviour
     {
         if (energy < 80)
         {
-
-            
             Debug.Log("Too small to split ember");
             return;
         }
@@ -289,33 +270,33 @@ public class FlameController : MonoBehaviour
         Destroy(this.gameObject);
     }
 
-    private void changeColour(Gradient grad, Color lightColor,FlameColour flameColour)
+    private void changeColour(FlameColour flameColor)
     {
-
-        Debug.Log("Changing colour");
-        this.flameColour = flameColour;
-        switch (flameColour)
-        {
-            case FlameColour.copper:
-                break;
-            case FlameColour.iron:
-
-                break;
-            case FlameColour.alluminium:
-                var colAlpha = FlameAlpha.colorOverLifetime;
-                colAlpha.color = grad;
-                var colAdd = FlameAdd.colorOverLifetime;
-                colAdd.color = grad;
-                var colGlow = FlameGlow.colorOverLifetime;
-                colGlow.color = grad;
-                var colSparks = FlameSparks.colorOverLifetime;
-                colSparks.color = grad;
-                FlameLight.color = lightColor;
-                break;
-
-            default:
-                break;
-        }
+        Debug.Log("Changing colour " + FlameColour.GetName(flameColor.GetType(), flameColor));
+        Color lightColor = lightColorTable[flameColour];
+        Gradient grad = new ();
+        // Go from 0 opacity to 1 and back to 0
+        var alphas = new GradientAlphaKey[3] {
+            new (0.0f, 0.0f),
+            new (1.0f, 0.3f),
+            new (0.0f, 1.0f)
+        };
+        var colors = new GradientColorKey[2];
+        // One primary flame color
+        colors[0] = new GradientColorKey(lightColor, 0.3f);
+        // One secondary, darker color
+        colors[1] = new GradientColorKey(lightColor * 0.8f, 0.6f);
+        grad.SetKeys(colors, alphas);
+        this.flameColour = flameColor;
+        var colAlpha = FlameAlpha.colorOverLifetime;
+        colAlpha.color = grad;
+        var colAdd = FlameAdd.colorOverLifetime;
+        colAdd.color = grad;
+        var colGlow = FlameGlow.colorOverLifetime;
+        colGlow.color = grad;
+        var colSparks = FlameSparks.colorOverLifetime;
+        colSparks.color = grad;
+        FlameLight.color = lightColor;
     }
 
     public void setFlameEnergy(double inEnergy)
@@ -325,7 +306,7 @@ public class FlameController : MonoBehaviour
 
     public double getFlameEnergy()
     {
-        int tempEnergy = (int) energy;
+        int tempEnergy = (int)energy;
         return tempEnergy;
     }
 
@@ -349,7 +330,7 @@ public class FlameController : MonoBehaviour
         GameObject newMiniflame = Instantiate(miniflamePrefab, spawnPosition, transform.rotation);
 
         // Disable the camera on the current flame
-        flameCamera.enabled = false; 
+        flameCamera.enabled = false;
 
         // Get the new flame's camera component and enable it
         Camera newFlameCamera = newMiniflame.GetComponentInChildren<Camera>();
