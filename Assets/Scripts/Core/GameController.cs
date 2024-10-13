@@ -130,7 +130,7 @@ public class GameController : MonoBehaviour
                 _gameUIController = FindAnyObjectByType<GameUIController>();
 
                 //Set timer to 10 minutes (600 seconds)
-                _gameUIController.SetTimer(15f);  // 10 minutes in seconds
+                _gameUIController.SetTimer(30f);  // 10 minutes in seconds
                 levelStartTime = 15f;
 
                 _flameController = FindAnyObjectByType<FlameController>();
@@ -163,6 +163,7 @@ public class GameController : MonoBehaviour
 
     public void timeout()
     {
+        _soundManager.StopMovementSound();
         _soundManager.StopBackgroundMusic();
         Debug.Log("Time is up");
         SceneManager.LoadScene("Gameover"); //Change to the level selected
@@ -175,6 +176,7 @@ public class GameController : MonoBehaviour
 
     public void openMainMenu()
     {
+        _soundManager.StopMovementSound();
         _soundManager.StopBackgroundMusic();
         //DontDestroyOnLoad(GameControllerObj);
         SceneManager.LoadScene(0, LoadSceneMode.Single);
@@ -185,6 +187,7 @@ public class GameController : MonoBehaviour
 
     public void retryLevel()
     {
+        _soundManager.StopMovementSound();
         _soundManager.StopBackgroundMusic();
         //DontDestroyOnLoad(GameControllerObj);
         Debug.Log("Current Level: " + currentLevel);
@@ -193,6 +196,7 @@ public class GameController : MonoBehaviour
 
     public void finishLevel()
     {
+        _soundManager.StopMovementSound();
         calculateStats(); //Must be called before new scene is loaded and gameUI is destroyed
         _soundManager.StopBackgroundMusic();
         Debug.Log("Level Complete");
