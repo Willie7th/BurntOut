@@ -9,7 +9,8 @@ public class SoundManager : MonoBehaviour
 
     // AudioSource for background music
     private AudioSource backgroundMusicSource;
-
+    private AudioSource movementSource;
+    private Coroutine fadeOutCoroutine;
     // Dictionary to store preloaded audio clips
     private Dictionary<string, AudioClip> preloadedClips = new Dictionary<string, AudioClip>();
 
@@ -17,10 +18,12 @@ public class SoundManager : MonoBehaviour
     {
         // Main audio source for sound effects
         source = GetComponent<AudioSource>();
-        
+
         // Add a separate audio source for background music
         backgroundMusicSource = gameObject.AddComponent<AudioSource>();
         backgroundMusicSource.loop = true; // Loop background music
+
+        movementSource = gameObject.AddComponent<AudioSource>();
 
         SoundManagerObj = GameObject.Find("SoundManager");
         DontDestroyOnLoad(SoundManagerObj);
@@ -32,17 +35,14 @@ public class SoundManager : MonoBehaviour
     // Coroutine to preload audio asynchronously
     private IEnumerator PreloadAudioClips()
     {
-        // List of audio files to preload from BackgroundMusic folder (inside Resources)
-        string[] audioFiles = { "Audio/BackgroundMusic/LevelBackground", "Audio/BackgroundMusic/GameOver", "Audio/BackgroundMusic/LevelComplete1", "Audio/BackgroundMusic/MenuBackground"}; // Update with your music file names
+        string[] audioFiles = { "Audio/BackgroundMusic/LevelBackground", "Audio/BackgroundMusic/GameOver", "Audio/BackgroundMusic/LevelComplete1", "Audio/BackgroundMusic/MenuBackground"};
 
         foreach (string audioFileName in audioFiles)
         {
             ResourceRequest loadRequest = Resources.LoadAsync<AudioClip>(audioFileName);
 
-            // Wait until the audio clip is loaded
             yield return loadRequest;
 
-            // Add the preloaded clip to the dictionary if loading was successful
             if (loadRequest.asset != null)
             {
                 preloadedClips[audioFileName] = loadRequest.asset as AudioClip;
@@ -96,5 +96,51 @@ public class SoundManager : MonoBehaviour
     public void PlaySound(AudioClip _sound, float volume)
     {
         source.PlayOneShot(_sound, volume);
+    }
+
+    public void PlayMovementSound(AudioClip _sound, float volume)
+    {
+        if (fadeOutCoroutine != null) // Stop fade-out if currently happening
+        {
+            StopCoroutine(fadeOutCoroutine);
+            fadeOutCoroutine = null;
+            movementSource.volume = volume; // Reset volume in case it was reduced during fade-out
+        }
+
+        if (!movementSource.isPlaying)
+        {
+            movementSource.clip = _sound;
+            movementSource.volume = volume;
+            movementSource.loop = true;  // Loop the movement sound
+            movementSource.Play();
+        }
+    }
+
+    // Fade out movement sound over 2 seconds
+    public void StopMovementSound()
+    {
+        if (movementSource.isPlaying)
+        {
+            if (fadeOutCoroutine != null)
+                StopCoroutine(fadeOutCoroutine); // Ensure there's no conflicting fade-out
+
+            fadeOutCoroutine = StartCoroutine(FadeOutMovementSound(2f));  // 2 seconds fade-out
+        }
+    }
+
+    // Coroutine to gradually reduce volume and stop the movement sound
+    private IEnumerator FadeOutMovementSound(float fadeDuration)
+    {
+        float startVolume = movementSource.volume;
+
+        while (movementSource.volume > 0)
+        {
+            movementSource.volume -= startVolume * Time.deltaTime / fadeDuration;  // Gradually reduce volume
+            yield return null;  // Wait for the next frame
+        }
+
+        movementSource.Stop();  // Stop the sound after fade-out
+        movementSource.clip = null;  // Reset the clip
+        movementSource.volume = startVolume;  // Reset the volume for next time the sound is played
     }
 }

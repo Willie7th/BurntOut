@@ -8,7 +8,7 @@ using UnityEngine.Tilemaps;
 
 public class FlameController : MonoBehaviour
 {
-    public int speed = 5;
+    public float speed = 5f;  //maybe add a sprint mechanic
     private Rigidbody2D characterBody;
     private ParticleSystem FlameAlpha;
     private ParticleSystem FlameAdd;
@@ -21,6 +21,15 @@ public class FlameController : MonoBehaviour
 
     public GameObject emberPrefab;
     private GameController _gameController;
+    private SoundManager _soundManager;
+
+    public GameObject miniflamePrefab;
+    private Camera flameCamera;
+
+    private bool isMoving = false;
+    public bool mainFlame;
+
+    [SerializeField] private AudioClip flameMoveAudio;
 
     public TextMeshProUGUI energyLabel;
 
@@ -57,12 +66,17 @@ public class FlameController : MonoBehaviour
 
         if (_gameController == null)
             _gameController = FindAnyObjectByType<GameController>();
+
+        if (_soundManager == null)
+            _soundManager = FindAnyObjectByType<SoundManager>();
         
         FlameLight = this.transform.GetChild(1).gameObject.GetComponent<Light2D>();
         FlameAlpha = this.transform.GetChild(2).gameObject.GetComponent<ParticleSystem>();
         FlameAdd = this.transform.GetChild(3).gameObject.GetComponent<ParticleSystem>();
         FlameGlow = this.transform.GetChild(4).gameObject.GetComponent<ParticleSystem>();
         FlameSparks = this.transform.GetChild(5).gameObject.GetComponent<ParticleSystem>();
+
+        flameCamera = GetComponentInChildren<Camera>();
     }
 
     void Update()
@@ -99,7 +113,31 @@ public class FlameController : MonoBehaviour
 
             CapsuleCollider2D cap =  GetComponent<CapsuleCollider2D>();
             cap.size = new Vector2(1f,1f);
+            SpawnMiniflame();
         }
+
+        
+
+        bool isMovementKeyPressed = 
+            Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D) ||
+            Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.UpArrow);
+
+        if (isMovementKeyPressed && !isMoving)
+        {
+            // Start playing movement sound
+            _soundManager.PlayMovementSound(flameMoveAudio, 0.1f);
+            isMoving = true;
+            //Debug.Log("Is moving true");
+        }
+        else if (!isMovementKeyPressed && isMoving)
+        {
+            // Stop movement sound if no key is pressed
+            _soundManager.StopMovementSound();
+            isMoving = false;
+            //Debug.Log("Is moving false");
+        }
+
+
 
     }
 
@@ -132,12 +170,23 @@ public class FlameController : MonoBehaviour
         {
             changeColour(AluminumGradient, AluminumColor,FlameColour.copper);
         }
-
-        if(colName == "Finish")
+        else if(colName == "Finish")
         {
             _gameController.finishLevel();
         }
     }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        string colName = collision.gameObject.name;
+        if(colName == "Flame")
+        {
+            Debug.Log("Combining back into flame");
+            combineSplitFlame(collision.gameObject);
+        }
+    }
+
+    
 
     public void meltFlame()
     {
@@ -191,11 +240,25 @@ public class FlameController : MonoBehaviour
         energy = energy + 10;
     }
 
-    private void combineSplitFlame(GameObject miniFlame)
+    private void combineSplitFlame(GameObject originalFlame)
     {
+        // Increase the energy of the original flame
+        FlameController originalFlameController = originalFlame.GetComponent<FlameController>();
+        //originalFlameController.energy += 30;  // You can adjust how much energy is transferred
+
+        // Switch control back to the original flame
+        flameCamera.enabled = false;  // Disable current flame's camera (mini flame)
+        Camera originalFlameCamera = originalFlame.GetComponentInChildren<Camera>();
+        originalFlameCamera.enabled = true;  // Enable original flame's camera
+
+        // Re-enable the original flame's controller and disable the mini flame's controller
+        originalFlameController.enabled = true;
+        this.enabled = false;  // Disable the mini flame controller
         Debug.Log("Mini flame picked up");
-        Destroy(miniFlame); //Destroy the ember
         energy = energy + 30;
+
+        // Destroy the mini flame (this game object)
+        Destroy(this.gameObject);
     }
 
     private void changeColour(Gradient grad, Color lightColor,FlameColour flameColour)
@@ -236,5 +299,45 @@ public class FlameController : MonoBehaviour
     {
         int tempEnergy = (int) energy;
         return tempEnergy;
+    }
+
+    private void SpawnMiniflame()
+    {
+        if (energy < 80)
+        {
+            Debug.Log("Too small to split flame");
+            return;
+        }
+
+        Debug.Log("Spawning mini flame");
+
+        // Reduce the energy of the current flame
+        energy -= 50;
+
+        // Calculate where to spawn the new flame
+        Vector3 spawnPosition = transform.position + new Vector3(1.0f, 0.0f, 0.0f);  // Example offset for the new miniflame
+
+        // Spawn the new flame
+        GameObject newMiniflame = Instantiate(miniflamePrefab, spawnPosition, transform.rotation);
+
+        // Disable the camera on the current flame
+        flameCamera.enabled = false; 
+
+        // Get the new flame's camera component and enable it
+        Camera newFlameCamera = newMiniflame.GetComponentInChildren<Camera>();
+        newFlameCamera.enabled = true;
+
+        Rigidbody2D miniFlameBody = newMiniflame.GetComponent<Rigidbody2D>();
+        miniFlameBody.linearVelocity = Vector2.zero;
+        miniFlameBody.angularVelocity = 0f;
+
+        Rigidbody2D mainFlameBody = this.gameObject.GetComponent<Rigidbody2D>();
+        mainFlameBody.linearVelocity = Vector2.zero;
+        mainFlameBody.angularVelocity = 0f;
+
+        // Optionally, transfer control to the new flame by disabling current FlameController and enabling it on the new flame
+        FlameController newFlameController = newMiniflame.GetComponent<FlameController>();
+        newFlameController.enabled = true;
+        this.enabled = false;  // Disable the current flame's controller
     }
 }
