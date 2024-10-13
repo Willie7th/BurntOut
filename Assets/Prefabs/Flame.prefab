@@ -9917,6 +9917,7 @@ GameObject:
   - component: {fileID: 8160309214752340752}
   - component: {fileID: 1150724334659696158}
   - component: {fileID: 653579485014450525}
+  - component: {fileID: 6396868692852833819}
   m_Layer: 0
   m_Name: Flame
   m_TagString: Untagged
@@ -10043,7 +10044,8 @@ MonoBehaviour:
   emberPrefab: {fileID: 2460328542801419492, guid: 8680f2cd99324e94c8bca845fa88f5d6, type: 3}
   energyLabel: {fileID: 0}
   energy: 1000
-  flameType: default
+  flameType: 0
+  flameColour: 0
   AluminumColor: {r: 0.14, g: 0.76, b: 0.92, a: 1}
   AluminumGradient:
     serializedVersion: 2
@@ -10123,6 +10125,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 34179ed0909b3d84e8ba6b4f716d3ae5, type: 3}
+  m_Resource: {fileID: 8300000, guid: 34179ed0909b3d84e8ba6b4f716d3ae5, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
