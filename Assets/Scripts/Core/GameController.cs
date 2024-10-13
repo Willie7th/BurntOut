@@ -154,7 +154,7 @@ public class GameController : MonoBehaviour
         {
             case 1: 
                 
-                AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("Level_1");
+                AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("DemoLevel");
                 while (!asyncLoad.isDone)
                 {
                     yield return null;

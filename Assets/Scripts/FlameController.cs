@@ -145,6 +145,11 @@ public class FlameController : MonoBehaviour
         
     }
 
+    public FlameColour getFlameType()
+    {
+        return flameColour;
+    }
+
     void OnTriggerEnter2D(Collider2D col)
     {
         Debug.Log("Trigger enter " + col.gameObject.name);
@@ -170,6 +175,10 @@ public class FlameController : MonoBehaviour
         else if (colName == "Finish")
         {
             _gameController.finishLevel();
+        }
+        else if (colName == "Water")
+        {
+            Debug.Log("You die from water");
         }
     }
 
