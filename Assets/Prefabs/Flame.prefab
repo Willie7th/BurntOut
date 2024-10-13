@@ -10047,7 +10047,8 @@ MonoBehaviour:
   flameMoveAudio: {fileID: 8300000, guid: 56056c768e463304499ebc6edbf5936b, type: 3}
   energyLabel: {fileID: 0}
   energy: 1000
-  flameType: default
+  flameType: 0
+  flameColour: 0
   AluminumColor: {r: 0.14, g: 0.76, b: 0.92, a: 1}
   AluminumGradient:
     serializedVersion: 2

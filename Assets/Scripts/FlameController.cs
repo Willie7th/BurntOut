@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using UnityEngine.Rendering.Universal;
+using UnityEngine.Tilemaps;
 
 public class FlameController : MonoBehaviour
 {
@@ -34,7 +35,11 @@ public class FlameController : MonoBehaviour
 
     public double energy = 1000;  //Some stage make private set but public get
 
-    public string flameType = "default";
+    // public string flameType = "default";
+
+    public FlameType flameType = FlameType.mainFlame;
+
+    public FlameColour flameColour=FlameColour.none;
 
     private static GradientAlphaKey[] ALPHA_KEYS = new GradientAlphaKey[3] {
         new GradientAlphaKey(0.0f, 0.0f),
@@ -57,6 +62,7 @@ public class FlameController : MonoBehaviour
     {
         velocity = new Vector2(speed, speed);
         characterBody = GetComponent<Rigidbody2D>();
+
 
         if (_gameController == null)
             _gameController = FindAnyObjectByType<GameController>();
@@ -102,7 +108,11 @@ public class FlameController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.M))
         {
             //Mini flame
+            
             flameSplit();
+
+            CapsuleCollider2D cap =  GetComponent<CapsuleCollider2D>();
+            cap.size = new Vector2(1f,1f);
             SpawnMiniflame();
         }
 
@@ -150,7 +160,15 @@ public class FlameController : MonoBehaviour
         }
         else if (colName == "AlluminumOre")
         {
-            changeColour(AluminumGradient, AluminumColor);
+            changeColour(AluminumGradient, AluminumColor,FlameColour.alluminium);
+        }
+        else if (colName == "IronOre")
+        {
+            changeColour(AluminumGradient, AluminumColor,FlameColour.iron);
+        }
+        else if (colName == "CopperOre")
+        {
+            changeColour(AluminumGradient, AluminumColor,FlameColour.copper);
         }
         else if(colName == "Finish")
         {
@@ -190,6 +208,8 @@ public class FlameController : MonoBehaviour
     {
         if (energy < 80)
         {
+
+            
             Debug.Log("Too small to split ember");
             return;
         }
@@ -241,18 +261,33 @@ public class FlameController : MonoBehaviour
         Destroy(this.gameObject);
     }
 
-    private void changeColour(Gradient grad, Color lightColor)
+    private void changeColour(Gradient grad, Color lightColor,FlameColour flameColour)
     {
+
         Debug.Log("Changing colour");
-        var colAlpha = FlameAlpha.colorOverLifetime;
-        colAlpha.color = grad;
-        var colAdd = FlameAdd.colorOverLifetime;
-        colAdd.color = grad;
-        var colGlow = FlameGlow.colorOverLifetime;
-        colGlow.color = grad;
-        var colSparks = FlameSparks.colorOverLifetime;
-        colSparks.color = grad;
-        FlameLight.color = lightColor;
+        this.flameColour = flameColour;
+        switch (flameColour)
+        {
+            case FlameColour.copper:
+                break;
+            case FlameColour.iron:
+
+                break;
+            case FlameColour.alluminium:
+                var colAlpha = FlameAlpha.colorOverLifetime;
+                colAlpha.color = grad;
+                var colAdd = FlameAdd.colorOverLifetime;
+                colAdd.color = grad;
+                var colGlow = FlameGlow.colorOverLifetime;
+                colGlow.color = grad;
+                var colSparks = FlameSparks.colorOverLifetime;
+                colSparks.color = grad;
+                FlameLight.color = lightColor;
+                break;
+
+            default:
+                break;
+        }
     }
 
     public void setFlameEnergy(double inEnergy)
