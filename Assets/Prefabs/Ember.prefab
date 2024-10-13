@@ -4928,7 +4928,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myLight: {fileID: 5264289523271739253}
-  maxInterval: 4
+  maxInterval: 2
   maxFlicker: 0.1
   minRadius: 0.7
 --- !u!1 &4062252989915956829
