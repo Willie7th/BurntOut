@@ -176,6 +176,30 @@ public class GameController : MonoBehaviour
                 levelStartEnergy = 500;
                 
                 break;
+            case 2: 
+                
+                AsyncOperation asyncLoad2 = SceneManager.LoadSceneAsync("Level_2");
+                while (!asyncLoad2.isDone)
+                {
+                    yield return null;
+                }
+                Debug.Log("Scene '" + level + "' loaded successfully.");
+                GameObject gameUIInstance2 = Instantiate(gameUIPrefab);
+                currentLevel = 1;
+
+                //Unique code:
+                //GameUIController gameUIController = gameUIInstance.GetComponent<GameUIController>();
+                _gameUIController = FindAnyObjectByType<GameUIController>();
+
+                //Set timer to 10 minutes (600 seconds)
+                _gameUIController.SetTimer(30f);  // 10 minutes in seconds
+                levelStartTime = 15f;
+
+                _flameController = FindAnyObjectByType<FlameController>();
+                _flameController.setFlameEnergy(500);
+                levelStartEnergy = 500;
+                
+                break;
             default:
                 break;
         }
