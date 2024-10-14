@@ -169,7 +169,7 @@ public class GameController : MonoBehaviour
 
                 //Set timer to 10 minutes (600 seconds)
                 _gameUIController.SetTimer(30f);  // 10 minutes in seconds
-                levelStartTime = 15f;
+                levelStartTime = 30f;
 
                 _flameController = FindAnyObjectByType<FlameController>();
                 _flameController.setFlameEnergy(500);
@@ -200,6 +200,21 @@ public class GameController : MonoBehaviour
     }
 
     public void timeout()
+    {
+        
+        _soundManager.StopMovementSound();
+        _soundManager.StopBackgroundMusic();
+        Debug.Log("Time is up");
+        StartCoroutine(LevelTransition("Gameover"));
+        //SceneManager.LoadScene("Gameover"); //Change to the level selected
+        pauseMenuOpen = true;
+
+        //GameObject flame = GameObject.Find("Flame");
+        //flame.SetActive(false);
+        _soundManager.PlayBackgroundMusic("Audio/BackgroundMusic/GameOver", 0.138f);
+    }
+
+    public void waterDeath()
     {
         
         _soundManager.StopMovementSound();

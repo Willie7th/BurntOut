@@ -1179,7 +1179,8 @@ PrefabInstance:
       value: LevelLoader
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 868790956667693507, guid: 3580414a3567b8648bbb76a987afbd8e, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3580414a3567b8648bbb76a987afbd8e, type: 3}

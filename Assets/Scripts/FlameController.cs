@@ -163,13 +163,16 @@ public class FlameController : MonoBehaviour
         else if (colName == "AlluminumOre")
         {
             changeColour(FlameColour.alluminium);
+            changeColour(FlameColour.alluminium);
         }
         else if (colName == "IronOre")
         {
             changeColour(FlameColour.iron);
+            changeColour(FlameColour.iron);
         }
         else if (colName == "CopperOre")
         {
+            changeColour(FlameColour.copper);
             changeColour(FlameColour.copper);
         }
         else if (colName == "Finish")
@@ -179,6 +182,7 @@ public class FlameController : MonoBehaviour
         else if (colName == "Water")
         {
             Debug.Log("You die from water");
+            _gameController.waterDeath();
         }
     }
 
@@ -193,6 +197,15 @@ public class FlameController : MonoBehaviour
         else if(colName == "Water")
         {
             Debug.Log("Player Dies");
+            _gameController.waterDeath();
+        }
+        else if (colName == "MiniFlame(Clone)")
+        {
+            Debug.Log("Get mini flame colour");
+            Debug.Log("Current big flame colour - " + flameColour);
+            Debug.Log("Current mini flame colour - " + collision.gameObject.GetComponent<FlameController>().flameColour);
+            flameColour = collision.gameObject.GetComponent<FlameController>().flameColour;
+            Debug.Log("New big flame colour - " + flameColour);
         }
 
     }
@@ -213,7 +226,7 @@ public class FlameController : MonoBehaviour
         isJumping = true;
 
         
-        Vector2 offset = previousInputMovement * 2f;
+        Vector2 offset = previousInputMovement * 2.5f;
         newTarget = characterBody.position + offset;
         //Debug.Log("New position " + characterBody.position);
         //this.gameObject.transform.position = 
@@ -356,6 +369,13 @@ public class FlameController : MonoBehaviour
         // Optionally, transfer control to the new flame by disabling current FlameController and enabling it on the new flame
         FlameController newFlameController = newMiniflame.GetComponent<FlameController>();
         newFlameController.enabled = true;
+        newFlameController.flameColour = flameColour;
+
+
+        //newFlameController.changeColour(FlameColour.copper);
+
+
+        this.gameObject.GetComponent<CapsuleCollider2D>().size = new Vector2(4.84f, 4.84f);
         this.enabled = false;  // Disable the current flame's controller
     }
 }
