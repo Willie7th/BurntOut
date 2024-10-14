@@ -10040,7 +10040,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad30d3abc937e0047af9d2c67c9a7342, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
+  speed: 8
   emberPrefab: {fileID: 2460328542801419492, guid: 8680f2cd99324e94c8bca845fa88f5d6, type: 3}
   miniflamePrefab: {fileID: 0}
   mainFlame: 0
