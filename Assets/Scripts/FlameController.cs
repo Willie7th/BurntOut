@@ -8,6 +8,7 @@ public class FlameController : MonoBehaviour
 {
     public float speed = 5f;  //maybe add a sprint mechanic
     public float jumpDistance = 2.5f;
+    public float jumpSpeed = 30f;
 
     private Rigidbody2D characterBody;
     public ParticleSystem FlameAlpha;
@@ -15,7 +16,6 @@ public class FlameController : MonoBehaviour
     public ParticleSystem FlameGlow;
     public ParticleSystem FlameSparks;
     public Light2D FlameLight;
-    private Vector2 velocity;
     private Vector2 inputMovement;
     private Vector2 previousInputMovement = new Vector2(0f, 0f);
 
@@ -29,8 +29,8 @@ public class FlameController : MonoBehaviour
     private bool isMoving = false;
     public bool mainFlame;
 
-    private Vector2? jumpTarget = null;
-    private Vector2 jumpVector;
+    private bool isJumping;
+    private float jumpedDistance;
 
     [SerializeField] private AudioClip flameMoveAudio;
 
@@ -61,7 +61,6 @@ public class FlameController : MonoBehaviour
 
     void Start()
     {
-        velocity = new Vector2(speed, speed);
         characterBody = GetComponent<Rigidbody2D>();
         if (_gameController == null)
             _gameController = FindAnyObjectByType<GameController>();
@@ -150,35 +149,34 @@ public class FlameController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Vector2 delta;
-        // If jumpTarget is set we are jumping
-        if (jumpTarget != null)
+        Vector3 velocity;
+        if (isJumping)
         {
-            delta = jumpVector;
+            velocity = new(jumpSpeed, jumpSpeed);
         }
         else
         {
-            delta = inputMovement * velocity * Time.deltaTime;
+            velocity = new(speed, speed);
         }
+        Vector2 delta = inputMovement * velocity * Time.deltaTime;
         Vector2 newPosition = characterBody.position + delta;
         characterBody.MovePosition(newPosition);
         // Check whether we've jumped to the target
-        if (jumpTarget != null && (jumpTarget - newPosition)?.magnitude < 0.1)
+        if (isJumping)
         {
-            jumpTarget = null;
+            jumpedDistance += delta.magnitude;
+            // I've travelled further than jumpDistance during my jump, I can stop now
+            if (jumpedDistance >= jumpDistance) {
+                isJumping = false;
+                jumpedDistance = 0.0f;
+            }
             Debug.Log("End jump");
         }
-
     }
 
     public FlameColour getFlameType()
     {
         return flameColour;
-    }
-
-    public bool IsJumping()
-    {
-        return jumpTarget != null;
     }
 
     public double RemainingEnergy()
@@ -218,7 +216,7 @@ public class FlameController : MonoBehaviour
         {
             _gameController.finishLevel();
         }
-        else if (colName == "Water" && !IsJumping())
+        else if (colName == "Water" && !isJumping)
         {
             Debug.Log("You die from water");
             _gameController.waterDeath();
@@ -233,7 +231,7 @@ public class FlameController : MonoBehaviour
             Debug.Log("Combining back into flame");
             combineSplitFlame(collision.gameObject);
         }
-        else if (colName == "Water" && !IsJumping())
+        else if (colName == "Water" && !isJumping)
         {
             Debug.Log("Player Dies");
             _gameController.waterDeath();
@@ -257,12 +255,8 @@ public class FlameController : MonoBehaviour
             Debug.Log("Too small to jump");
             return;
         }
-        // jumpVector is the direction we want to jump in
-        jumpVector = previousInputMovement * jumpDistance;
-        // jumpTarget is the position we want to jump to
-        jumpTarget = characterBody.position + jumpVector;
-        // Now we scale jumpVector so we can apply the jump in x steps
-        jumpVector.Scale(new Vector2(0.2f, 0.2f));
+        isJumping = true;
+        jumpedDistance = 0.0f;
         Energy *= 0.99;  // Use energy to jump
         Debug.Log("Start jump");
     }
