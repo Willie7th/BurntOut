@@ -40,6 +40,7 @@ public class FlameController : MonoBehaviour
     private double startEnergy;
     private float startOuterRadius;
     private float startInnerRadius;
+    private bool isInWater = false;
 
     public FlameType flameType = FlameType.mainFlame;
     public FlameColour flameColour = FlameColour.iron;
@@ -79,6 +80,9 @@ public class FlameController : MonoBehaviour
 
     void Update()
     {
+        if (isInWater && !isJumping) {
+            _gameController.waterDeath();
+        }
         inputMovement = new Vector2(
             Input.GetAxisRaw("Horizontal"),
             Input.GetAxisRaw("Vertical")
@@ -216,10 +220,17 @@ public class FlameController : MonoBehaviour
         {
             _gameController.finishLevel();
         }
-        else if (colName == "Water" && !isJumping)
+        else if (colName == "Water")
         {
-            Debug.Log("You die from water");
-            _gameController.waterDeath();
+            isInWater = true;
+        }
+    }
+
+    void OnTriggerExit2D(Collider2D col) {
+        string colName = col.gameObject.name;
+        if (colName == "Water")
+        {
+            isInWater = false;
         }
     }
 
@@ -230,11 +241,6 @@ public class FlameController : MonoBehaviour
         {
             Debug.Log("Combining back into flame");
             combineSplitFlame(collision.gameObject);
-        }
-        else if (colName == "Water" && !isJumping)
-        {
-            Debug.Log("Player Dies");
-            _gameController.waterDeath();
         }
         else if (colName == "MiniFlame(Clone)")
         {
