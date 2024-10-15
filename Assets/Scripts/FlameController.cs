@@ -7,6 +7,8 @@ using UnityEngine.Rendering.Universal;
 public class FlameController : MonoBehaviour
 {
     public float speed = 5f;  //maybe add a sprint mechanic
+    public float jumpDistance = 2.5f;
+
     private Rigidbody2D characterBody;
     private ParticleSystem FlameAlpha;
     private ParticleSystem FlameAdd;
@@ -27,16 +29,14 @@ public class FlameController : MonoBehaviour
     private bool isMoving = false;
     public bool mainFlame;
 
-    private bool isJumping = false;
-    private Vector2 newTarget;
+    private Vector2? jumpTarget = null;
+    private Vector2 jumpVector;
 
     [SerializeField] private AudioClip flameMoveAudio;
 
     public TextMeshProUGUI energyLabel;
 
     public double energy = 1000;  //Some stage make private set but public get
-
-    // public string flameType = "default";
 
     public FlameType flameType = FlameType.mainFlame;
     public FlameColour flameColour = FlameColour.iron;
@@ -48,20 +48,15 @@ public class FlameController : MonoBehaviour
     {
         velocity = new Vector2(speed, speed);
         characterBody = GetComponent<Rigidbody2D>();
-
-
         if (_gameController == null)
             _gameController = FindAnyObjectByType<GameController>();
-
         if (_soundManager == null)
             _soundManager = FindAnyObjectByType<SoundManager>();
-
         FlameLight = this.transform.GetChild(1).gameObject.GetComponent<Light2D>();
         FlameAlpha = this.transform.GetChild(2).gameObject.GetComponent<ParticleSystem>();
         FlameAdd = this.transform.GetChild(3).gameObject.GetComponent<ParticleSystem>();
         FlameGlow = this.transform.GetChild(4).gameObject.GetComponent<ParticleSystem>();
         FlameSparks = this.transform.GetChild(5).gameObject.GetComponent<ParticleSystem>();
-
         flameCamera = GetComponentInChildren<Camera>();
     }
 
@@ -88,7 +83,7 @@ public class FlameController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             //Flame Jump
-            flameJump();
+            FlameJump();
         }
 
         if (Input.GetKeyDown(KeyCode.M))
@@ -125,16 +120,23 @@ public class FlameController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (isJumping)
+        Vector2 delta;
+        // If jumpTarget is set we are jumping
+        if (jumpTarget != null)
         {
-            characterBody.MovePosition(newTarget);
-            isJumping = false;
+            delta = jumpVector;
         }
         else
         {
-            Vector2 delta = inputMovement * velocity * Time.deltaTime;
-            Vector2 newPosition = characterBody.position + delta;
-            characterBody.MovePosition(newPosition);
+            delta = inputMovement * velocity * Time.deltaTime;
+        }
+        Vector2 newPosition = characterBody.position + delta;
+        characterBody.MovePosition(newPosition);
+        // Check whether we've jumped to the target
+        if (jumpTarget != null && (jumpTarget - newPosition)?.magnitude < 0.1)
+        {
+            jumpTarget = null;
+            Debug.Log("End jump");
         }
 
     }
@@ -142,6 +144,11 @@ public class FlameController : MonoBehaviour
     public FlameColour getFlameType()
     {
         return flameColour;
+    }
+
+    public bool IsJumping()
+    {
+        return jumpTarget != null;
     }
 
     void OnTriggerEnter2D(Collider2D col)
@@ -170,7 +177,7 @@ public class FlameController : MonoBehaviour
         {
             _gameController.finishLevel();
         }
-        else if (colName == "Water")
+        else if (colName == "Water" && !IsJumping())
         {
             Debug.Log("You die from water");
             _gameController.waterDeath();
@@ -185,7 +192,7 @@ public class FlameController : MonoBehaviour
             Debug.Log("Combining back into flame");
             combineSplitFlame(collision.gameObject);
         }
-        else if (colName == "Water")
+        else if (colName == "Water" && !IsJumping())
         {
             Debug.Log("Player Dies");
             _gameController.waterDeath();
@@ -201,25 +208,21 @@ public class FlameController : MonoBehaviour
 
     }
 
-    public void meltFlame()
-    {
-
-    }
-
-    private void flameJump()
+    private void FlameJump()
     {
         if (energy < 30)
         {
             Debug.Log("Too small to jump");
             return;
         }
-        isJumping = true;
-        Vector2 offset = previousInputMovement * 2.5f;
-        newTarget = characterBody.position + offset;
-        //Debug.Log("New position " + characterBody.position);
-        //this.gameObject.transform.position = 
-        Debug.Log("Flame jumped");
-        energy = energy * 0.99;
+        // jumpVector is the direction we want to jump in
+        jumpVector = previousInputMovement * jumpDistance;
+        // jumpTarget is the position we want to jump to
+        jumpTarget = characterBody.position + jumpVector;
+        // Now we scale jumpVector so we can apply the jump in x steps
+        jumpVector.Scale(new Vector2(0.2f, 0.2f));
+        energy *= 0.99;  // Use energy to jump
+        Debug.Log("Start jump");
     }
 
     private void flameSplit()
