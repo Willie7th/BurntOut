@@ -595,7 +595,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1174596619}
         m_TargetAssemblyTypeName: LevelCompleteController, Assembly-CSharp
-        m_MethodName: retryButton
+        m_MethodName: RetryButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2467,7 +2467,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1174596619}
         m_TargetAssemblyTypeName: LevelCompleteController, Assembly-CSharp
-        m_MethodName: nextLevel
+        m_MethodName: NextLevelButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

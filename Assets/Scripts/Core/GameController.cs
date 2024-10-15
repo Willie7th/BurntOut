@@ -99,6 +99,7 @@ public class GameController : MonoBehaviour
         {
             yield return null;
         }
+        GameObject gameUIInstance = Instantiate(gameUIPrefab);
         _gameUIController = FindAnyObjectByType<GameUIController>();
         _gameUIController.SetTimer((float)level.time * 60);
         _flameController = FindAnyObjectByType<FlameController>();
