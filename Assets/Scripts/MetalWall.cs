@@ -49,7 +49,7 @@ public class MetalWall : MonoBehaviour
         {
             FlameController flameController = collision.gameObject.GetComponent<FlameController>();
             Debug.Log(metalType+" : " +flameController.flameColour);
-            if (flameController != null && flameController.flameColour == metalType){
+            if (flameController != null && flameController.flameColour == metalType && flameController.mainFlame){
                 // flameController.fla
                 StartMelting();
             }

@@ -76132,7 +76132,7 @@ MonoBehaviour:
     rid: 4636931048297988187
   m_ShadowCastingSource: 2
   m_ShadowMesh:
-    m_Mesh: {fileID: 1023407892}
+    m_Mesh: {fileID: 1035045664}
     m_LocalBounds:
       m_Center: {x: 0.5, y: 0, z: 0}
       m_Extent: {x: 6.5, y: 6, z: 0}
@@ -77024,6 +77024,10 @@ PrefabInstance:
     - target: {fileID: 1150724334659696158, guid: c29497eb5df2b8c448d2703c9e4d7470, type: 3}
       propertyPath: speed
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1150724334659696158, guid: c29497eb5df2b8c448d2703c9e4d7470, type: 3}
+      propertyPath: mainFlame
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1150724334659696158, guid: c29497eb5df2b8c448d2703c9e4d7470, type: 3}
       propertyPath: emberPrefab
@@ -77922,7 +77926,7 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2957917280564457116, guid: f050c54b0b95c4943bb2f9d72d235287, type: 3}
   m_PrefabInstance: {fileID: 948606762}
   m_PrefabAsset: {fileID: 0}
---- !u!43 &1023407892
+--- !u!43 &1035045664
 Mesh:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

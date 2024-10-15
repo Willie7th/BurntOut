@@ -44,7 +44,6 @@ public class GameController : MonoBehaviour
 
     private float levelStartTime;
     private float remainingTime;
-    private double levelStartEnergy;
     private double remainingEnergy;
 
 
@@ -150,18 +149,20 @@ public class GameController : MonoBehaviour
 
         yield return new WaitForSeconds(1f);
 
+        AsyncOperation asyncLoad;
+        GameObject gameUIInstance;
+
         switch(level)
         {
             case 1: 
-                
-                AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("DemoLevel");
+                Debug.Log("Scene '" + level + "' busy loading");
+                asyncLoad = SceneManager.LoadSceneAsync("Level_1");
                 while (!asyncLoad.isDone)
                 {
                     yield return null;
                 }
                 Debug.Log("Scene '" + level + "' loaded successfully.");
-                GameObject gameUIInstance = Instantiate(gameUIPrefab);
-                currentLevel = 1;
+                gameUIInstance = Instantiate(gameUIPrefab);
 
                 //Unique code:
                 //GameUIController gameUIController = gameUIInstance.GetComponent<GameUIController>();
@@ -172,20 +173,20 @@ public class GameController : MonoBehaviour
                 levelStartTime = 30f;
 
                 _flameController = FindAnyObjectByType<FlameController>();
-                _flameController.setFlameEnergy(500);
-                levelStartEnergy = 500;
+                _flameController.SetStartEnergy(500);
+                currentLevel = level;
                 
                 break;
             case 2: 
-                
-                AsyncOperation asyncLoad2 = SceneManager.LoadSceneAsync("Level_2");
-                while (!asyncLoad2.isDone)
+                Debug.Log("Scene '" + level + "' busy loading");
+                asyncLoad = SceneManager.LoadSceneAsync("Level_2");
+                while (!asyncLoad.isDone)
                 {
+                    Debug.Log("Async not done");
                     yield return null;
                 }
                 Debug.Log("Scene '" + level + "' loaded successfully.");
-                GameObject gameUIInstance2 = Instantiate(gameUIPrefab);
-                currentLevel = 1;
+                gameUIInstance = Instantiate(gameUIPrefab);
 
                 //Unique code:
                 //GameUIController gameUIController = gameUIInstance.GetComponent<GameUIController>();
@@ -196,8 +197,128 @@ public class GameController : MonoBehaviour
                 levelStartTime = 180f;
 
                 _flameController = FindAnyObjectByType<FlameController>();
-                _flameController.setFlameEnergy(500);
-                levelStartEnergy = 500;
+                _flameController.SetStartEnergy(500);
+                currentLevel = level;
+                
+                break;
+                case 3: 
+                Debug.Log("Scene '" + level + "' busy loading");
+                asyncLoad = SceneManager.LoadSceneAsync("Level_3");
+                while (!asyncLoad.isDone)
+                {
+                    Debug.Log("Async not done");
+                    yield return null;
+                }
+                Debug.Log("Scene '" + level + "' loaded successfully.");
+                gameUIInstance = Instantiate(gameUIPrefab);
+
+                //Unique code:
+                //GameUIController gameUIController = gameUIInstance.GetComponent<GameUIController>();
+                _gameUIController = FindAnyObjectByType<GameUIController>();
+
+                //Set timer to 10 minutes (600 seconds)
+                _gameUIController.SetTimer(180f);  // 10 minutes in seconds
+                levelStartTime = 180f;
+
+                _flameController = FindAnyObjectByType<FlameController>();
+                _flameController.SetStartEnergy(500);
+                currentLevel = level;
+                
+                break;
+                case 4: 
+                Debug.Log("Scene '" + level + "' busy loading");
+                asyncLoad = SceneManager.LoadSceneAsync("Level_4");
+                while (!asyncLoad.isDone)
+                {
+                    Debug.Log("Async not done");
+                    yield return null;
+                }
+                Debug.Log("Scene '" + level + "' loaded successfully.");
+                gameUIInstance = Instantiate(gameUIPrefab);
+
+                //Unique code:
+                //GameUIController gameUIController = gameUIInstance.GetComponent<GameUIController>();
+                _gameUIController = FindAnyObjectByType<GameUIController>();
+
+                //Set timer to 10 minutes (600 seconds)
+                _gameUIController.SetTimer(180f);  // 10 minutes in seconds
+                levelStartTime = 180f;
+
+                _flameController = FindAnyObjectByType<FlameController>();
+                _flameController.SetStartEnergy(500);
+                currentLevel = level;
+                
+                break;
+                case 5: 
+                Debug.Log("Scene '" + level + "' busy loading");
+                asyncLoad = SceneManager.LoadSceneAsync("Level_5");
+                while (!asyncLoad.isDone)
+                {
+                    Debug.Log("Async not done");
+                    yield return null;
+                }
+                Debug.Log("Scene '" + level + "' loaded successfully.");
+                gameUIInstance = Instantiate(gameUIPrefab);
+
+                //Unique code:
+                //GameUIController gameUIController = gameUIInstance.GetComponent<GameUIController>();
+                _gameUIController = FindAnyObjectByType<GameUIController>();
+
+                //Set timer to 10 minutes (600 seconds)
+                _gameUIController.SetTimer(180f);  // 10 minutes in seconds
+                levelStartTime = 180f;
+
+                _flameController = FindAnyObjectByType<FlameController>();
+                _flameController.SetStartEnergy(500);
+                currentLevel = level;
+                
+                break;
+                case 6: 
+                Debug.Log("Scene '" + level + "' busy loading");
+                asyncLoad = SceneManager.LoadSceneAsync("Level_6");
+                while (!asyncLoad.isDone)
+                {
+                    Debug.Log("Async not done");
+                    yield return null;
+                }
+                Debug.Log("Scene '" + level + "' loaded successfully.");
+                gameUIInstance = Instantiate(gameUIPrefab);
+
+                //Unique code:
+                //GameUIController gameUIController = gameUIInstance.GetComponent<GameUIController>();
+                _gameUIController = FindAnyObjectByType<GameUIController>();
+
+                //Set timer to 10 minutes (600 seconds)
+                _gameUIController.SetTimer(180f);  // 10 minutes in seconds
+                levelStartTime = 180f;
+
+                _flameController = FindAnyObjectByType<FlameController>();
+                _flameController.SetStartEnergy(500);
+                currentLevel = level;
+                
+                break;
+                case 7: 
+                Debug.Log("Scene '" + level + "' busy loading");
+                asyncLoad = SceneManager.LoadSceneAsync("Level_7");
+                while (!asyncLoad.isDone)
+                {
+                    Debug.Log("Async not done");
+                    yield return null;
+                }
+                Debug.Log("Scene '" + level + "' loaded successfully.");
+                gameUIInstance = Instantiate(gameUIPrefab);
+
+                //Unique code:
+                //GameUIController gameUIController = gameUIInstance.GetComponent<GameUIController>();
+                _gameUIController = FindAnyObjectByType<GameUIController>();
+
+                //Set timer to 10 minutes (600 seconds)
+                _gameUIController.SetTimer(180f);  // 10 minutes in seconds
+                levelStartTime = 180f;
+
+                _flameController = FindAnyObjectByType<FlameController>();
+                _flameController.SetStartEnergy(500);
+                currentLevel = level;
                 
                 break;
             default:
@@ -209,7 +330,7 @@ public class GameController : MonoBehaviour
 
     public double getEnergySpent()
     {
-        return remainingEnergy;
+        return _flameController.RemainingEnergy();
     }
 
     public float getTimeTaken()
@@ -219,7 +340,7 @@ public class GameController : MonoBehaviour
 
     private void calculateStats()  //Calculate stats before GameUI is destroyed
     {
-        remainingEnergy = levelStartEnergy - _flameController.getFlameEnergy();
+        remainingEnergy = _flameController.RemainingEnergy();
         remainingTime = levelStartTime - _gameUIController.getCurrentTime();
     }
 
@@ -336,7 +457,7 @@ public class GameController : MonoBehaviour
         if (currentLevel + 1 <= maxLevel)
         {
             Debug.Log("Loading level " + currentLevel + 1);
-            openMainMenu(); //Would actually be levelLoaded(currentLevel + 1);
+            levelLoaded(currentLevel + 1); //Would actually be levelLoaded(currentLevel + 1);
         }
         else{
             openMainMenu();
@@ -349,7 +470,6 @@ public class GameController : MonoBehaviour
         currentLevelIndex = 0;
         pauseMenuOpen = false;
         levelStartTime = 0f;
-        levelStartEnergy = 0;
     }
 
     
