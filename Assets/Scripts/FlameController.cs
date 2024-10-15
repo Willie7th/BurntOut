@@ -81,7 +81,7 @@ public class FlameController : MonoBehaviour
     void Update()
     {
         if (isInWater && !isJumping) {
-            _gameController.waterDeath();
+            waterDeath();
         }
         inputMovement = new Vector2(
             Input.GetAxisRaw("Horizontal"),
@@ -169,6 +169,10 @@ public class FlameController : MonoBehaviour
         if (isJumping)
         {
             jumpedDistance += delta.magnitude;
+            if(jumpedDistance == 0)
+            {
+                isJumping = false;
+            }
             // I've travelled further than jumpDistance during my jump, I can stop now
             if (jumpedDistance >= jumpDistance) {
                 isJumping = false;
@@ -367,6 +371,7 @@ public class FlameController : MonoBehaviour
         }
 
         Debug.Log("Spawning mini flame");
+        _gameController.setMainFlame(this.gameObject);
 
         // Reduce the energy of the current flame
         Energy -= 50;
@@ -404,5 +409,25 @@ public class FlameController : MonoBehaviour
 
         this.gameObject.GetComponent<CapsuleCollider2D>().size = new Vector2(4.84f, 4.84f);
         this.enabled = false;  // Disable the current flame's controller
+    }
+
+    private void waterDeath()
+    {
+        if(mainFlame)
+            {
+                if(energy < 150)
+                {
+                    //moveFlameBack();
+                    _gameController.waterDeath();
+                }
+                else{
+                    _gameController.waterDeath();
+                }
+
+            }
+            else{
+                _gameController.miniFlameDead();
+                Destroy(this.gameObject);
+            }
     }
 }

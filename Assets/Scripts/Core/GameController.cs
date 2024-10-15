@@ -21,6 +21,7 @@ public class GameController : MonoBehaviour
     public GameObject gameUIPrefab;
 
     private GameObject GameControllerObj;
+    private GameObject mainFlameObj;
 
     private FlameType flameState;
 
@@ -88,6 +89,20 @@ public class GameController : MonoBehaviour
         {
             Debug.LogWarning("levels.txt not found!");
         }
+    }
+
+    public void setMainFlame(GameObject flame)  //set a reference to the main flame
+    {
+        mainFlameObj = flame;
+    }
+
+    public void miniFlameDead()
+    {
+        FlameController newFlameController = mainFlameObj.GetComponent<FlameController>();
+        newFlameController.enabled = true;
+
+        Camera newFlameCamera = mainFlameObj.GetComponentInChildren<Camera>();
+        newFlameCamera.enabled = true;
     }
 
     private List<int> ParseCompletedLevels(string data)
