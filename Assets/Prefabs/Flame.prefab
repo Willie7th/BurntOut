@@ -10041,9 +10041,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5
+  jumpDistance: 2.5
+  jumpSpeed: 30
+  FlameAlpha: {fileID: 0}
+  FlameAdd: {fileID: 0}
+  FlameGlow: {fileID: 0}
+  FlameSparks: {fileID: 0}
+  FlameLight: {fileID: 0}
   emberPrefab: {fileID: 2460328542801419492, guid: 8680f2cd99324e94c8bca845fa88f5d6, type: 3}
   miniflamePrefab: {fileID: 8124588793927950101, guid: 458883a750a40b84db36d40412d9bc50, type: 3}
-  mainFlame: 0
+  mainFlame: 1
   flameMoveAudio: {fileID: 0}
   energyLabel: {fileID: 0}
   energy: 1000
