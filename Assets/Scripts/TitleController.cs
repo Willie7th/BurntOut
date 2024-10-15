@@ -24,4 +24,10 @@ public class TitleController : MonoBehaviour
         Debug.Log("Menu loaded");
         SceneManager.LoadScene("Menu");
     }
+
+    public void viewTutorial()
+    {
+        Debug.Log("Tutorial Loaded");
+        SceneManager.LoadScene("Tutorial");
+    }
 }
