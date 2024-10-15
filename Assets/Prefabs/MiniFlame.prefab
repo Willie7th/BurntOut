@@ -10040,7 +10040,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad30d3abc937e0047af9d2c67c9a7342, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 8
+  speed: 6
+  jumpDistance: 2.5
+  jumpSpeed: 30
   FlameAlpha: {fileID: 5158342651984917447}
   FlameAdd: {fileID: 8984313682766836008}
   FlameGlow: {fileID: 7001635130185419065}

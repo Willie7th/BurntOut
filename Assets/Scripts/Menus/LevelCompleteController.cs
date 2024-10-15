@@ -37,6 +37,7 @@ public class LevelCompleteController : MonoBehaviour
     private void setValues()  //Set the energy and time taken
     {
         energySpent = _gameController.getEnergySpent();
+        energySpent = (int) energySpent;
         timeTaken = _gameController.getTimeTaken();
 
         int minutes = Mathf.FloorToInt(timeTaken / 60);

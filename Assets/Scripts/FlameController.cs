@@ -300,6 +300,10 @@ public class FlameController : MonoBehaviour
 
     private void pickUPEmber(GameObject ember)
     {
+        if(!mainFlame)
+        {
+            return;
+        }
         Debug.Log("Ember picked up");
         Destroy(ember); //Destroy the ember
         Energy += 10;
@@ -374,7 +378,7 @@ public class FlameController : MonoBehaviour
         _gameController.setMainFlame(this.gameObject);
 
         // Reduce the energy of the current flame
-        Energy -= 50;
+        //Energy -= 50;
 
         // Calculate where to spawn the new flame
         Vector3 tempPosition = new Vector3(-previousInputMovement.x*1.5f, -previousInputMovement.y * 1.5f + 1f, 0);
@@ -415,13 +419,19 @@ public class FlameController : MonoBehaviour
     {
         if(mainFlame)
             {
-                if(energy < 150)
+                if(energy > 150)
                 {
+                    Vector3 tempPos = new Vector3(previousInputMovement.x, previousInputMovement.y, 0f);
+                    this.gameObject.transform.position = this.gameObject.transform.position + (-1.0f * tempPos); 
                     //moveFlameBack();
-                    _gameController.waterDeath();
+                    //_gameController.waterDeath();
+                    //this.enabled = false;
+                    Energy -= 100; 
+                    Debug.Log("Almost died");
                 }
                 else{
                     _gameController.waterDeath();
+                    this.enabled = false;
                 }
 
             }
