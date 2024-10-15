@@ -67,7 +67,7 @@ public class GameUIController : MonoBehaviour
             }
         }
 
-        energyText.text = "Energy level: " + _flameController.getFlameEnergy();
+        energyText.text = "Energy level: " + (int) _flameController.Energy;
     }
 
     // Method to update the timer display
