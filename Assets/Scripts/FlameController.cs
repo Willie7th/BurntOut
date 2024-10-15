@@ -8,11 +8,11 @@ public class FlameController : MonoBehaviour
 {
     public float speed = 5f;  //maybe add a sprint mechanic
     private Rigidbody2D characterBody;
-    private ParticleSystem FlameAlpha;
-    private ParticleSystem FlameAdd;
-    private ParticleSystem FlameGlow;
-    private ParticleSystem FlameSparks;
-    private Light2D FlameLight;
+    public ParticleSystem FlameAlpha;
+    public ParticleSystem FlameAdd;
+    public ParticleSystem FlameGlow;
+    public ParticleSystem FlameSparks;
+    public Light2D FlameLight;
     private Vector2 velocity;
     private Vector2 inputMovement;
     private Vector2 previousInputMovement = new Vector2(0f, 0f);
@@ -61,6 +61,7 @@ public class FlameController : MonoBehaviour
         FlameAdd = this.transform.GetChild(3).gameObject.GetComponent<ParticleSystem>();
         FlameGlow = this.transform.GetChild(4).gameObject.GetComponent<ParticleSystem>();
         FlameSparks = this.transform.GetChild(5).gameObject.GetComponent<ParticleSystem>();
+        Debug.Log("Flame loaded all special things");
 
         flameCamera = GetComponentInChildren<Camera>();
     }
@@ -81,18 +82,30 @@ public class FlameController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.E))
         {
+            if(!mainFlame)
+            {
+                return;
+            }
             //Drop Ember
             dropEmber();
         }
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
+            if(!mainFlame)
+            {
+                return;
+            }
             //Flame Jump
             flameJump();
         }
 
         if (Input.GetKeyDown(KeyCode.M))
         {
+            if(!mainFlame)
+            {
+                return;
+            }
             // Mini flame
             flameSplit();
             CapsuleCollider2D cap = GetComponent<CapsuleCollider2D>();
@@ -196,6 +209,7 @@ public class FlameController : MonoBehaviour
             Debug.Log("Current big flame colour - " + flameColour);
             Debug.Log("Current mini flame colour - " + collision.gameObject.GetComponent<FlameController>().flameColour);
             flameColour = collision.gameObject.GetComponent<FlameController>().flameColour;
+            ChangeColor(flameColour);
             Debug.Log("New big flame colour - " + flameColour);
         }
 
@@ -277,7 +291,7 @@ public class FlameController : MonoBehaviour
         Destroy(this.gameObject);
     }
 
-    private void ChangeColor(FlameColour fc)
+    public void ChangeColor(FlameColour fc)
     {
         Debug.Log("Changing colour " + FlameColour.GetName(fc.GetType(), fc));
         Color lightColor = fc switch
@@ -338,7 +352,8 @@ public class FlameController : MonoBehaviour
         energy -= 50;
 
         // Calculate where to spawn the new flame
-        Vector3 spawnPosition = transform.position + new Vector3(1.0f, 0.0f, 0.0f);  // Example offset for the new miniflame
+        Vector3 tempPosition = new Vector3(-previousInputMovement.x*1.5f, -previousInputMovement.y * 1.5f + 1f, 0);
+        Vector3 spawnPosition = transform.position + tempPosition;  // Example offset for the new miniflame
 
         // Spawn the new flame
         GameObject newMiniflame = Instantiate(miniflamePrefab, spawnPosition, transform.rotation);
@@ -364,7 +379,7 @@ public class FlameController : MonoBehaviour
         newFlameController.flameColour = flameColour;
 
 
-        //newFlameController.changeColour(FlameColour.copper);
+        newFlameController.ChangeColor(flameColour);
 
 
         this.gameObject.GetComponent<CapsuleCollider2D>().size = new Vector2(4.84f, 4.84f);

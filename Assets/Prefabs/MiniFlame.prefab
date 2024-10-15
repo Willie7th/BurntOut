@@ -10041,6 +10041,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 8
+  FlameAlpha: {fileID: 5158342651984917447}
+  FlameAdd: {fileID: 8984313682766836008}
+  FlameGlow: {fileID: 7001635130185419065}
+  FlameSparks: {fileID: 951626757318652026}
+  FlameLight: {fileID: 1389968949892804482}
   emberPrefab: {fileID: 2460328542801419492, guid: 8680f2cd99324e94c8bca845fa88f5d6, type: 3}
   miniflamePrefab: {fileID: 0}
   mainFlame: 0
