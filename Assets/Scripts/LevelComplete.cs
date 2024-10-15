@@ -10,7 +10,7 @@ public class LevelComplete : MonoBehaviour
     {
         foreach (Transform child in transform)
         {
-            Debug.Log(child);
+            //Debug.Log(child);
             emberPrefabs.Add(child.gameObject);
             child.gameObject.SetActive(false);
         }
