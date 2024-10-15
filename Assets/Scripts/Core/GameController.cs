@@ -44,7 +44,6 @@ public class GameController : MonoBehaviour
 
     private float levelStartTime;
     private float remainingTime;
-    private double levelStartEnergy;
     private double remainingEnergy;
 
 
@@ -174,9 +173,7 @@ public class GameController : MonoBehaviour
                 levelStartTime = 30f;
 
                 _flameController = FindAnyObjectByType<FlameController>();
-                _flameController.Energy = 500;
-                levelStartEnergy = 500;
-
+                _flameController.SetStartEnergy(500);
                 currentLevel = level;
                 
                 break;
@@ -200,8 +197,7 @@ public class GameController : MonoBehaviour
                 levelStartTime = 180f;
 
                 _flameController = FindAnyObjectByType<FlameController>();
-                _flameController.Energy = 500;
-                levelStartEnergy = 500;
+                _flameController.SetStartEnergy(500);
                 currentLevel = level;
                 
                 break;
@@ -225,8 +221,7 @@ public class GameController : MonoBehaviour
                 levelStartTime = 180f;
 
                 _flameController = FindAnyObjectByType<FlameController>();
-                _flameController.Energy = 500;
-                levelStartEnergy = 500;
+                _flameController.SetStartEnergy(500);
                 currentLevel = level;
                 
                 break;
@@ -250,8 +245,7 @@ public class GameController : MonoBehaviour
                 levelStartTime = 180f;
 
                 _flameController = FindAnyObjectByType<FlameController>();
-                _flameController.Energy = 500;
-                levelStartEnergy = 500;
+                _flameController.SetStartEnergy(500);
                 currentLevel = level;
                 
                 break;
@@ -275,8 +269,7 @@ public class GameController : MonoBehaviour
                 levelStartTime = 180f;
 
                 _flameController = FindAnyObjectByType<FlameController>();
-                _flameController.Energy = 500;
-                levelStartEnergy = 500;
+                _flameController.SetStartEnergy(500);
                 currentLevel = level;
                 
                 break;
@@ -300,8 +293,7 @@ public class GameController : MonoBehaviour
                 levelStartTime = 180f;
 
                 _flameController = FindAnyObjectByType<FlameController>();
-                _flameController.Energy = 500;
-                levelStartEnergy = 500;
+                _flameController.SetStartEnergy(500);
                 currentLevel = level;
                 
                 break;
@@ -325,8 +317,7 @@ public class GameController : MonoBehaviour
                 levelStartTime = 180f;
 
                 _flameController = FindAnyObjectByType<FlameController>();
-                _flameController.Energy = 500;
-                levelStartEnergy = 500;
+                _flameController.SetStartEnergy(500);
                 currentLevel = level;
                 
                 break;
@@ -339,7 +330,7 @@ public class GameController : MonoBehaviour
 
     public double getEnergySpent()
     {
-        return remainingEnergy;
+        return _flameController.RemainingEnergy();
     }
 
     public float getTimeTaken()
@@ -349,7 +340,7 @@ public class GameController : MonoBehaviour
 
     private void calculateStats()  //Calculate stats before GameUI is destroyed
     {
-        remainingEnergy = levelStartEnergy - _flameController.Energy;
+        remainingEnergy = _flameController.RemainingEnergy();
         remainingTime = levelStartTime - _gameUIController.getCurrentTime();
     }
 
@@ -479,7 +470,6 @@ public class GameController : MonoBehaviour
         currentLevelIndex = 0;
         pauseMenuOpen = false;
         levelStartTime = 0f;
-        levelStartEnergy = 0;
     }
 
     
