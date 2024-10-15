@@ -40,7 +40,6 @@ public class FlameController : MonoBehaviour
 
     public FlameType flameType = FlameType.mainFlame;
     public FlameColour flameColour = FlameColour.iron;
-    private readonly Dictionary<FlameColour, Color> lightColorTable = new();
     public Color AluminumColor = new(0.14f, 0.76f, 0.92f, 1.0f);
     public Color CopperColor = new(0.15f, 0.6f, 0.08f, 1.0f);
     public Color IronColor = new(1.0f, 0.68f, 0.125f, 1.0f);
@@ -64,11 +63,6 @@ public class FlameController : MonoBehaviour
         FlameSparks = this.transform.GetChild(5).gameObject.GetComponent<ParticleSystem>();
 
         flameCamera = GetComponentInChildren<Camera>();
-
-        // Add flameColor - lightColor mapping
-        lightColorTable.Add(FlameColour.alluminium, AluminumColor);
-        lightColorTable.Add(FlameColour.copper, CopperColor);
-        lightColorTable.Add(FlameColour.iron, IronColor);
     }
 
     void Update()
@@ -131,18 +125,18 @@ public class FlameController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if(isJumping)
+        if (isJumping)
         {
             characterBody.MovePosition(newTarget);
-            
             isJumping = false;
         }
-        else{
+        else
+        {
             Vector2 delta = inputMovement * velocity * Time.deltaTime;
             Vector2 newPosition = characterBody.position + delta;
             characterBody.MovePosition(newPosition);
         }
-        
+
     }
 
     public FlameColour getFlameType()
@@ -162,18 +156,15 @@ public class FlameController : MonoBehaviour
         }
         else if (colName == "AlluminumOre")
         {
-            changeColour(FlameColour.alluminium);
-            changeColour(FlameColour.alluminium);
+            ChangeColor(FlameColour.alluminium);
         }
         else if (colName == "IronOre")
         {
-            changeColour(FlameColour.iron);
-            changeColour(FlameColour.iron);
+            ChangeColor(FlameColour.iron);
         }
         else if (colName == "CopperOre")
         {
-            changeColour(FlameColour.copper);
-            changeColour(FlameColour.copper);
+            ChangeColor(FlameColour.copper);
         }
         else if (colName == "Finish")
         {
@@ -194,7 +185,7 @@ public class FlameController : MonoBehaviour
             Debug.Log("Combining back into flame");
             combineSplitFlame(collision.gameObject);
         }
-        else if(colName == "Water")
+        else if (colName == "Water")
         {
             Debug.Log("Player Dies");
             _gameController.waterDeath();
@@ -222,19 +213,13 @@ public class FlameController : MonoBehaviour
             Debug.Log("Too small to jump");
             return;
         }
-
         isJumping = true;
-
-        
         Vector2 offset = previousInputMovement * 2.5f;
         newTarget = characterBody.position + offset;
         //Debug.Log("New position " + characterBody.position);
         //this.gameObject.transform.position = 
         Debug.Log("Flame jumped");
         energy = energy * 0.99;
-        
-
-
     }
 
     private void flameSplit()
@@ -292,11 +277,18 @@ public class FlameController : MonoBehaviour
         Destroy(this.gameObject);
     }
 
-    private void changeColour(FlameColour flameColor)
+    private void ChangeColor(FlameColour fc)
     {
-        Debug.Log("Changing colour " + FlameColour.GetName(flameColor.GetType(), flameColor));
-        Color lightColor = lightColorTable[flameColour];
-        Gradient grad = new ();
+        Debug.Log("Changing colour " + FlameColour.GetName(fc.GetType(), fc));
+        Color lightColor = fc switch
+        {
+            FlameColour.alluminium => AluminumColor,
+            FlameColour.copper => CopperColor,
+            FlameColour.iron => IronColor,
+            // Shouldn't happen
+            _ => Color.white,
+        };
+        Gradient grad = new();
         // Go from 0 opacity to 1 and back to 0
         var alphas = new GradientAlphaKey[3] {
             new (0.0f, 0.0f),
@@ -309,7 +301,7 @@ public class FlameController : MonoBehaviour
         // One secondary, darker color
         colors[1] = new GradientColorKey(lightColor * 0.8f, 0.6f);
         grad.SetKeys(colors, alphas);
-        this.flameColour = flameColor;
+        flameColour = fc;
         var colAlpha = FlameAlpha.colorOverLifetime;
         colAlpha.color = grad;
         var colAdd = FlameAdd.colorOverLifetime;
