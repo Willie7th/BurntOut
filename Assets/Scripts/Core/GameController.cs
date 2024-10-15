@@ -1,62 +1,34 @@
 //This script keeps information that will be needed by all the scenes and is used to keep track of completed levels
 using System.Collections;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.Tilemaps;
+
+public class GameStats {
+
+    public double remainingEnergy;
+    public float remainingTime;
+    
+}
 
 public class GameController : MonoBehaviour
 {
-    private List<int> completedLevels = new List<int>{}; //Will store the completed levels and send them to the menu controller
-    private int maxLevel = 7; //change as needed
-
-    public int currentLevelIndex = 0;
-
-    private int currentLevel = 0;
-
+    public List<Level> levels;
+    private Level currentLevel = null;
+    public GameStats stats;
     public bool pauseMenuOpen = false;
-
     public GameObject gameUIPrefab;
-
     private GameObject GameControllerObj;
-
-    private FlameType flameState;
-
-    public void changeFlameState(){
-        // Assuming this script is on the Grid object
-        TilemapCollider2D crackedWalls = transform.Find("CrackedWalls").GetComponent<TilemapCollider2D>();
-        if (flameState == FlameType.mainFlame){
-            flameState = FlameType.miniFlame;
-            crackedWalls.enabled = false;
-        }
-        else {
-            flameState = FlameType.mainFlame;
-            crackedWalls.enabled = true;
-        }
-    }
-
     private FlameController _flameController;
     private GameUIController _gameUIController;
     private SoundManager _soundManager;
-    private string saveFilePath;
-
-    private float levelStartTime;
-    private float remainingTime;
-    private double remainingEnergy;
-
 
     // Start is called before the first frame update
     void Start()
     {
         GameControllerObj = GameObject.Find("GameController");
-
-        //TODO
-        flameState = FlameType.mainFlame;
-
         DontDestroyOnLoad(GameControllerObj);
-
         if (_soundManager == null)
             _soundManager = FindAnyObjectByType<SoundManager>();
     }
@@ -66,68 +38,42 @@ public class GameController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (currentLevel != 0 && !pauseMenuOpen) //If we are not on the main menu and pause menu is not open
+            if (currentLevel != null && !pauseMenuOpen) //If we are not on the main menu and pause menu is not open
             {
                 //DontDestroyOnLoad(GameControllerObj);
                 SceneManager.LoadScene("Pause", LoadSceneMode.Additive); //Change to the level selected
                 pauseMenuOpen = true;
             }
-            
         }
     }
 
-    private void updateCompletedLevels()
+    public List<Level> GetCompletedLevels()
     {
-        saveFilePath = Path.Combine(Application.dataPath, "SaveData/levels.txt");
-        if (File.Exists(saveFilePath))
-        {
-            string levelsCompletedData = File.ReadAllText(saveFilePath);
-            completedLevels = ParseCompletedLevels(levelsCompletedData);
-        }
-        else
-        {
-            Debug.LogWarning("levels.txt not found!");
-        }
+        return levels.Where(lvl => lvl.complete).ToList();
     }
 
-    private List<int> ParseCompletedLevels(string data)
+    public int GetCurrentLevelIndex()
     {
-        List<int> completedLevels = new List<int>();
-
-        string[] levelStrings = data.Split(';');
-        foreach (string levelStr in levelStrings)
-        {
-            if (int.TryParse(levelStr, out int level))
-            {
-                completedLevels.Add(level);
-            }
-        }
-
-        return completedLevels;
+        if (currentLevel == null) return -1;
+        return currentLevel.index;
     }
 
-    public List<int> getCompletedLevels()
+    public int GetMaxLevelIndex()
     {
-        updateCompletedLevels();
-        return completedLevels;
+        return levels.Count + 1;
     }
 
-    public int getCurrentLevel()
+    public void LoadLevel(int level)
     {
-        return currentLevel;
+        LoadLevel(GetLevel(level));
     }
 
-    public void setCurrentLevel(int level)
-    {
-        currentLevel = level;
-        Debug.Log("Current level: " + currentLevel);
-    }
-
-    public void levelLoaded(int level)
+    public void LoadLevel(Level level)
     {
         pauseMenuOpen = false;
-        Debug.Log("Attempting to load scene: " + level);
+        Debug.Log("Loading level " + level.index);
         StartCoroutine(WaitForSceneLoad(level));
+        currentLevel = level;
     }
 
     IEnumerator LevelTransition(string sceneName)
@@ -142,338 +88,94 @@ public class GameController : MonoBehaviour
         Debug.Log("Scene loaded");
     }
 
-    IEnumerator WaitForSceneLoad(int level)
+    IEnumerator WaitForSceneLoad(Level level)
     {
+        Debug.Log("Scene '" + level.name + "' busy loading");
         LevelLoaderController _levelLoaderController = FindAnyObjectByType<LevelLoaderController>();
         _levelLoaderController.playAnimation();
-
         yield return new WaitForSeconds(1f);
-
-        AsyncOperation asyncLoad;
-        GameObject gameUIInstance;
-
-        switch(level)
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(level.level_name);
+        while (!asyncLoad.isDone)
         {
-            case 1: 
-                Debug.Log("Scene '" + level + "' busy loading");
-                asyncLoad = SceneManager.LoadSceneAsync("Level_1");
-                while (!asyncLoad.isDone)
-                {
-                    yield return null;
-                }
-                Debug.Log("Scene '" + level + "' loaded successfully.");
-                gameUIInstance = Instantiate(gameUIPrefab);
-
-                //Unique code:
-                //GameUIController gameUIController = gameUIInstance.GetComponent<GameUIController>();
-                _gameUIController = FindAnyObjectByType<GameUIController>();
-
-                //Set timer to 10 minutes (600 seconds)
-                _gameUIController.SetTimer(30f);  // 10 minutes in seconds
-                levelStartTime = 30f;
-
-                _flameController = FindAnyObjectByType<FlameController>();
-                _flameController.SetStartEnergy(500);
-                currentLevel = level;
-                
-                break;
-            case 2: 
-                Debug.Log("Scene '" + level + "' busy loading");
-                asyncLoad = SceneManager.LoadSceneAsync("Level_2");
-                while (!asyncLoad.isDone)
-                {
-                    Debug.Log("Async not done");
-                    yield return null;
-                }
-                Debug.Log("Scene '" + level + "' loaded successfully.");
-                gameUIInstance = Instantiate(gameUIPrefab);
-
-                //Unique code:
-                //GameUIController gameUIController = gameUIInstance.GetComponent<GameUIController>();
-                _gameUIController = FindAnyObjectByType<GameUIController>();
-
-                //Set timer to 10 minutes (600 seconds)
-                _gameUIController.SetTimer(180f);  // 10 minutes in seconds
-                levelStartTime = 180f;
-
-                _flameController = FindAnyObjectByType<FlameController>();
-                _flameController.SetStartEnergy(500);
-                currentLevel = level;
-                
-                break;
-                case 3: 
-                Debug.Log("Scene '" + level + "' busy loading");
-                asyncLoad = SceneManager.LoadSceneAsync("Level_3");
-                while (!asyncLoad.isDone)
-                {
-                    Debug.Log("Async not done");
-                    yield return null;
-                }
-                Debug.Log("Scene '" + level + "' loaded successfully.");
-                gameUIInstance = Instantiate(gameUIPrefab);
-
-                //Unique code:
-                //GameUIController gameUIController = gameUIInstance.GetComponent<GameUIController>();
-                _gameUIController = FindAnyObjectByType<GameUIController>();
-
-                //Set timer to 10 minutes (600 seconds)
-                _gameUIController.SetTimer(180f);  // 10 minutes in seconds
-                levelStartTime = 180f;
-
-                _flameController = FindAnyObjectByType<FlameController>();
-                _flameController.SetStartEnergy(500);
-                currentLevel = level;
-                
-                break;
-                case 4: 
-                Debug.Log("Scene '" + level + "' busy loading");
-                asyncLoad = SceneManager.LoadSceneAsync("Level_4");
-                while (!asyncLoad.isDone)
-                {
-                    Debug.Log("Async not done");
-                    yield return null;
-                }
-                Debug.Log("Scene '" + level + "' loaded successfully.");
-                gameUIInstance = Instantiate(gameUIPrefab);
-
-                //Unique code:
-                //GameUIController gameUIController = gameUIInstance.GetComponent<GameUIController>();
-                _gameUIController = FindAnyObjectByType<GameUIController>();
-
-                //Set timer to 10 minutes (600 seconds)
-                _gameUIController.SetTimer(180f);  // 10 minutes in seconds
-                levelStartTime = 180f;
-
-                _flameController = FindAnyObjectByType<FlameController>();
-                _flameController.SetStartEnergy(500);
-                currentLevel = level;
-                
-                break;
-                case 5: 
-                Debug.Log("Scene '" + level + "' busy loading");
-                asyncLoad = SceneManager.LoadSceneAsync("Level_5");
-                while (!asyncLoad.isDone)
-                {
-                    Debug.Log("Async not done");
-                    yield return null;
-                }
-                Debug.Log("Scene '" + level + "' loaded successfully.");
-                gameUIInstance = Instantiate(gameUIPrefab);
-
-                //Unique code:
-                //GameUIController gameUIController = gameUIInstance.GetComponent<GameUIController>();
-                _gameUIController = FindAnyObjectByType<GameUIController>();
-
-                //Set timer to 10 minutes (600 seconds)
-                _gameUIController.SetTimer(180f);  // 10 minutes in seconds
-                levelStartTime = 180f;
-
-                _flameController = FindAnyObjectByType<FlameController>();
-                _flameController.SetStartEnergy(500);
-                currentLevel = level;
-                
-                break;
-                case 6: 
-                Debug.Log("Scene '" + level + "' busy loading");
-                asyncLoad = SceneManager.LoadSceneAsync("Level_6");
-                while (!asyncLoad.isDone)
-                {
-                    Debug.Log("Async not done");
-                    yield return null;
-                }
-                Debug.Log("Scene '" + level + "' loaded successfully.");
-                gameUIInstance = Instantiate(gameUIPrefab);
-
-                //Unique code:
-                //GameUIController gameUIController = gameUIInstance.GetComponent<GameUIController>();
-                _gameUIController = FindAnyObjectByType<GameUIController>();
-
-                //Set timer to 10 minutes (600 seconds)
-                _gameUIController.SetTimer(180f);  // 10 minutes in seconds
-                levelStartTime = 180f;
-
-                _flameController = FindAnyObjectByType<FlameController>();
-                _flameController.SetStartEnergy(500);
-                currentLevel = level;
-                
-                break;
-                case 7: 
-                Debug.Log("Scene '" + level + "' busy loading");
-                asyncLoad = SceneManager.LoadSceneAsync("Level_7");
-                while (!asyncLoad.isDone)
-                {
-                    Debug.Log("Async not done");
-                    yield return null;
-                }
-                Debug.Log("Scene '" + level + "' loaded successfully.");
-                gameUIInstance = Instantiate(gameUIPrefab);
-
-                //Unique code:
-                //GameUIController gameUIController = gameUIInstance.GetComponent<GameUIController>();
-                _gameUIController = FindAnyObjectByType<GameUIController>();
-
-                //Set timer to 10 minutes (600 seconds)
-                _gameUIController.SetTimer(180f);  // 10 minutes in seconds
-                levelStartTime = 180f;
-
-                _flameController = FindAnyObjectByType<FlameController>();
-                _flameController.SetStartEnergy(500);
-                currentLevel = level;
-                
-                break;
-            default:
-                break;
+            yield return null;
         }
-        
+        _gameUIController = FindAnyObjectByType<GameUIController>();
+        _gameUIController.SetTimer((float)level.time * 60);
+        _flameController = FindAnyObjectByType<FlameController>();
+        _flameController.SetStartEnergy(level.startEnergy);
         _soundManager.PlayBackgroundMusic("Audio/BackgroundMusic/LevelBackground", 0.033f);
+        Debug.Log("Scene '" + level.name + "' loaded successfully.");
     }
 
-    public double getEnergySpent()
+    public Level GetLevel(int levelIndex)
     {
-        return _flameController.RemainingEnergy();
+        for (int i = 0; i < levels.Count; i++)
+        {
+            if (levels[i].index == levelIndex) return levels[i];
+        }
+        return null;
     }
 
-    public float getTimeTaken()
+    private GameStats CalculateStats()
     {
-        return remainingTime;
+        return new GameStats {
+            remainingEnergy =_flameController.RemainingEnergy(),
+            remainingTime = currentLevel.time - _gameUIController.getCurrentTime()
+        };
     }
 
-    private void calculateStats()  //Calculate stats before GameUI is destroyed
+    public void GameOver(string gameOverMessage)
     {
-        remainingEnergy = _flameController.RemainingEnergy();
-        remainingTime = levelStartTime - _gameUIController.getCurrentTime();
-    }
-
-    public void timeout()
-    {
-        
         _soundManager.StopMovementSound();
         _soundManager.StopBackgroundMusic();
-        Debug.Log("Time is up");
+        Debug.Log(gameOverMessage);
         StartCoroutine(LevelTransition("Gameover"));
-        //SceneManager.LoadScene("Gameover"); //Change to the level selected
         pauseMenuOpen = true;
-
-        //GameObject flame = GameObject.Find("Flame");
-        //flame.SetActive(false);
         _soundManager.PlayBackgroundMusic("Audio/BackgroundMusic/GameOver", 0.138f);
     }
 
-    public void waterDeath()
+    public void OpenMainMenu()
     {
-        
-        _soundManager.StopMovementSound();
-        _soundManager.StopBackgroundMusic();
-        Debug.Log("Time is up");
-        StartCoroutine(LevelTransition("Gameover"));
-        //SceneManager.LoadScene("Gameover"); //Change to the level selected
-        pauseMenuOpen = true;
-
-        //GameObject flame = GameObject.Find("Flame");
-        //flame.SetActive(false);
-        _soundManager.PlayBackgroundMusic("Audio/BackgroundMusic/GameOver", 0.138f);
-    }
-
-    public void openMainMenu()
-    {
-        _soundManager.StopMovementSound();
-        _soundManager.StopBackgroundMusic();
-        //DontDestroyOnLoad(GameControllerObj);
-        StartCoroutine(LevelTransition("Menu"));
-        //SceneManager.LoadScene(0, LoadSceneMode.Single);
         Debug.Log("Loading Main Menu");
-        resetStats();
+        _soundManager.StopMovementSound();
+        _soundManager.StopBackgroundMusic();
+        StartCoroutine(LevelTransition("Menu"));
+        pauseMenuOpen = false;
+        currentLevel = null;
         _soundManager.PlayBackgroundMusic("Audio/BackgroundMusic/MenuBackground", 0.2f);
     }
 
-    public void retryLevel()
+    public void RetryLevel()
     {
         _soundManager.StopMovementSound();
         _soundManager.StopBackgroundMusic();
-        //DontDestroyOnLoad(GameControllerObj);
-        Debug.Log("Current Level: " + currentLevel);
-        //LevelTransition();
-        levelLoaded(currentLevel);
+        LoadLevel(currentLevel);
     }
 
-    public void finishLevel()
+    public void FinishLevel()
     {
         _soundManager.StopMovementSound();
-        calculateStats(); //Must be called before new scene is loaded and gameUI is destroyed
         _soundManager.StopBackgroundMusic();
-        Debug.Log("Level Complete");
-
-        
+        _soundManager.PlayBackgroundMusic("Audio/BackgroundMusic/LevelComplete1", 0.25f);
+        stats = CalculateStats(); //Must be called before new scene is loaded and timer is destroyed
         _gameUIController.setTimerRunning(false);
         StartCoroutine(LevelTransition("LevelComplete"));
-        //SceneManager.LoadScene("LevelComplete"); //Change to the level selected
         pauseMenuOpen = true;
-
-        //GameObject flame = GameObject.Find("Flame");
-        //flame.SetActive(false);
-
-        _soundManager.PlayBackgroundMusic("Audio/BackgroundMusic/LevelComplete1", 0.25f);
-
-        /*if currentLevel in completedLevels do nothing. Else add current level + ";" to text file of levels.
-        if (!(completedLevels.Contains(currentLevel)))
-        {
-            
-        }
-        */
-
-        // Check if currentLevel is in completedLevels
-        if (!completedLevels.Contains(currentLevel))
-        {
-            // Append currentLevel to levels.txt
-            AppendLevelToSaveFile(currentLevel);
-            
-            // Add currentLevel to the completedLevels list
-            completedLevels.Add(currentLevel);
-        }
+        currentLevel.complete = true;
+        Debug.Log("Level Complete");
     }
 
-    private void AppendLevelToSaveFile(int level)
+    public void LoadNextLevel()
     {
-        saveFilePath = Path.Combine(Application.dataPath, "SaveData/levels.txt");
-
-        if (File.Exists(saveFilePath))
+        int nextLevelIndex = GetCurrentLevelIndex() + 1;
+        _soundManager.StopBackgroundMusic();
+        if (nextLevelIndex <= GetMaxLevelIndex())
         {
-            // Append the current level followed by ";" to the first line of the file
-            using (StreamWriter writer = new StreamWriter(saveFilePath, append: true))
-            {
-                writer.Write(level + ";");
-            }
-            Debug.Log("Level " + level + " added to levels.txt.");
+            LoadLevel(nextLevelIndex); //Would actually be levelLoaded(currentLevel + 1);
         }
         else
         {
-            Debug.LogWarning("levels.txt not found!");
+            OpenMainMenu();
         }
     }
-
-    public void startNextLevel()
-    {
-        _soundManager.StopBackgroundMusic();
-        if (currentLevel + 1 <= maxLevel)
-        {
-            Debug.Log("Loading level " + currentLevel + 1);
-            levelLoaded(currentLevel + 1); //Would actually be levelLoaded(currentLevel + 1);
-        }
-        else{
-            openMainMenu();
-        }
-    }
-
-    private void resetStats()
-    {
-        currentLevel = 0;
-        currentLevelIndex = 0;
-        pauseMenuOpen = false;
-        levelStartTime = 0f;
-    }
-
-    
-    
-
-    //Should always listen for 'esc` to pause a game
 }

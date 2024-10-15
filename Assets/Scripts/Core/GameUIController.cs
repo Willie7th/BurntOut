@@ -63,7 +63,7 @@ public class GameUIController : MonoBehaviour
                 //UpdateTimerDisplay();
 
                 // Notify GameController when time runs out
-                _gameController.timeout();
+                _gameController.GameOver("Out of time");
             }
         }
 

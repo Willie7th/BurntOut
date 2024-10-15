@@ -340,7 +340,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 621523107}
         m_TargetAssemblyTypeName: PauseController, Assembly-CSharp
-        m_MethodName: retryButton
+        m_MethodName: RetryButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1349,7 +1349,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 621523107}
         m_TargetAssemblyTypeName: PauseController, Assembly-CSharp
-        m_MethodName: resumeButton
+        m_MethodName: ResumeButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

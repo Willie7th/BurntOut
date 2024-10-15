@@ -216,12 +216,11 @@ public class FlameController : MonoBehaviour
         }
         else if (colName == "Finish")
         {
-            _gameController.finishLevel();
+            _gameController.FinishLevel();
         }
         else if (colName == "Water" && !IsJumping())
         {
-            Debug.Log("You die from water");
-            _gameController.waterDeath();
+            _gameController.GameOver("You die from water");
         }
     }
 
@@ -235,8 +234,7 @@ public class FlameController : MonoBehaviour
         }
         else if (colName == "Water" && !IsJumping())
         {
-            Debug.Log("Player Dies");
-            _gameController.waterDeath();
+            _gameController.GameOver("You die from water");
         }
         else if (colName == "MiniFlame(Clone)")
         {

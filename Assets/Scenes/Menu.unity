@@ -408,7 +408,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1984500597}
         m_TargetAssemblyTypeName: MenuController, Assembly-CSharp
-        m_MethodName: levelClicked
+        m_MethodName: LevelButtonClicked
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -677,7 +677,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1984500597}
         m_TargetAssemblyTypeName: MenuController, Assembly-CSharp
-        m_MethodName: levelClicked
+        m_MethodName: LevelButtonClicked
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1082,7 +1082,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1984500597}
         m_TargetAssemblyTypeName: MenuController, Assembly-CSharp
-        m_MethodName: levelClicked
+        m_MethodName: LevelButtonClicked
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1351,7 +1351,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1984500597}
         m_TargetAssemblyTypeName: MenuController, Assembly-CSharp
-        m_MethodName: levelClicked
+        m_MethodName: LevelButtonClicked
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1695,7 +1695,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1984500597}
         m_TargetAssemblyTypeName: MenuController, Assembly-CSharp
-        m_MethodName: levelClicked
+        m_MethodName: LevelButtonClicked
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1828,7 +1828,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1984500597}
         m_TargetAssemblyTypeName: MenuController, Assembly-CSharp
-        m_MethodName: levelClicked
+        m_MethodName: LevelButtonClicked
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2233,7 +2233,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1984500597}
         m_TargetAssemblyTypeName: MenuController, Assembly-CSharp
-        m_MethodName: startButtonClicked
+        m_MethodName: StartButtonClicked
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2585,7 +2585,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1984500597}
         m_TargetAssemblyTypeName: MenuController, Assembly-CSharp
-        m_MethodName: levelClicked
+        m_MethodName: LevelButtonClicked
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

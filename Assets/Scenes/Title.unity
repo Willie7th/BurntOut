@@ -1284,7 +1284,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df2e43be8b1dade4b870f878a6e25107, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentLevelIndex: 0
+  levels:
+  - {fileID: 11400000, guid: 7f50d9be82896291e994b735c6e7d6e6, type: 2}
+  - {fileID: 11400000, guid: cb17defdd08c83e0ea448f0003e90a2c, type: 2}
+  - {fileID: 11400000, guid: f39a087de1884fa249a1e5b48c60e417, type: 2}
+  - {fileID: 11400000, guid: 482ea4e817ba3f857a14187f3742ff77, type: 2}
+  - {fileID: 11400000, guid: 6206c7e563f2ba399b6912dcb063bd67, type: 2}
+  - {fileID: 11400000, guid: ed29d108672311820a1ba306bb5b7972, type: 2}
+  - {fileID: 11400000, guid: 197e9dcb21ff2031ca6d028068aca245, type: 2}
   pauseMenuOpen: 0
   gameUIPrefab: {fileID: 5646775022719933452, guid: 735aff75c542fc74bbcd8ddf9c4f8d3f, type: 3}
 --- !u!4 &1653091696

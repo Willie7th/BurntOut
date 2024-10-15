@@ -27,19 +27,13 @@ public class PauseController : MonoBehaviour
         if (_soundManager == null)
             _soundManager = FindAnyObjectByType<SoundManager>();
 
-        string label = "Paused - Level " + _gameController.getCurrentLevel();
+        string label = "Paused - Level " + _gameController.GetCurrentLevelIndex();
         levelLabel.text = label;
         _gameUIController.setTimerRunning(false);
 
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    public void resumeButton()
+    public void ResumeButton()
     {
         Debug.Log("Resume button clicked");
          _soundManager.PlaySound(buttonClickAudio, 0.5f);
@@ -48,32 +42,17 @@ public class PauseController : MonoBehaviour
         _gameUIController.setTimerRunning(true);
     }
 
-    public void retryButton()
+    public void RetryButton()
     {
         Debug.Log("Retry button clicked");
-        /*
-        _gameController.pauseMenuOpen = false;
-        SceneManager.UnloadSceneAsync(_gameController.currentLevelIndex);
-        Debug.Log("Current Level: " + _gameController.currentLevelIndex);
-        _gameController.levelLoaded(_gameController.currentLevelIndex);
-        //SceneManager.LoadScene(_gameController.currentLevelIndex, LoadSceneMode.Single);
-        _gameUIController.setTimerRunning(true);
-        */
         _soundManager.PlaySound(retryClickAudio, 0.5f);
-        _gameController.retryLevel();
+        _gameController.RetryLevel();
     }
 
     public void MenuButton()
     {
         Debug.Log("Menu button clicked");
         _soundManager.PlaySound(buttonClickAudio, 0.5f);
-        /*
-        DontDestroyOnLoad(GameControllerObj);
-        SceneManager.LoadScene(0, LoadSceneMode.Single);
-        Debug.Log("Loading Main Menu");
-        _gameController.pauseMenuOpen = false;
-        _gameUIController.setTimerRunning(true);
-        */
-        _gameController.openMainMenu();
+        _gameController.OpenMainMenu();
     }
 }
