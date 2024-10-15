@@ -174,7 +174,7 @@ public class GameController : MonoBehaviour
                 levelStartTime = 30f;
 
                 _flameController = FindAnyObjectByType<FlameController>();
-                _flameController.setFlameEnergy(500);
+                _flameController.Energy = 500;
                 levelStartEnergy = 500;
 
                 currentLevel = level;
@@ -200,7 +200,7 @@ public class GameController : MonoBehaviour
                 levelStartTime = 180f;
 
                 _flameController = FindAnyObjectByType<FlameController>();
-                _flameController.setFlameEnergy(500);
+                _flameController.Energy = 500;
                 levelStartEnergy = 500;
                 currentLevel = level;
                 
@@ -225,7 +225,7 @@ public class GameController : MonoBehaviour
                 levelStartTime = 180f;
 
                 _flameController = FindAnyObjectByType<FlameController>();
-                _flameController.setFlameEnergy(500);
+                _flameController.Energy = 500;
                 levelStartEnergy = 500;
                 currentLevel = level;
                 
@@ -250,7 +250,7 @@ public class GameController : MonoBehaviour
                 levelStartTime = 180f;
 
                 _flameController = FindAnyObjectByType<FlameController>();
-                _flameController.setFlameEnergy(500);
+                _flameController.Energy = 500;
                 levelStartEnergy = 500;
                 currentLevel = level;
                 
@@ -275,7 +275,7 @@ public class GameController : MonoBehaviour
                 levelStartTime = 180f;
 
                 _flameController = FindAnyObjectByType<FlameController>();
-                _flameController.setFlameEnergy(500);
+                _flameController.Energy = 500;
                 levelStartEnergy = 500;
                 currentLevel = level;
                 
@@ -300,7 +300,7 @@ public class GameController : MonoBehaviour
                 levelStartTime = 180f;
 
                 _flameController = FindAnyObjectByType<FlameController>();
-                _flameController.setFlameEnergy(500);
+                _flameController.Energy = 500;
                 levelStartEnergy = 500;
                 currentLevel = level;
                 
@@ -325,7 +325,7 @@ public class GameController : MonoBehaviour
                 levelStartTime = 180f;
 
                 _flameController = FindAnyObjectByType<FlameController>();
-                _flameController.setFlameEnergy(500);
+                _flameController.Energy = 500;
                 levelStartEnergy = 500;
                 currentLevel = level;
                 
@@ -349,7 +349,7 @@ public class GameController : MonoBehaviour
 
     private void calculateStats()  //Calculate stats before GameUI is destroyed
     {
-        remainingEnergy = levelStartEnergy - _flameController.getFlameEnergy();
+        remainingEnergy = levelStartEnergy - _flameController.Energy;
         remainingTime = levelStartTime - _gameUIController.getCurrentTime();
     }
 

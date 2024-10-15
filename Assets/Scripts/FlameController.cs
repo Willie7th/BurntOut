@@ -37,12 +37,27 @@ public class FlameController : MonoBehaviour
     public TextMeshProUGUI energyLabel;
 
     public double energy = 1000;  //Some stage make private set but public get
+    private double startEnergy;
+    private float startOuterRadius;
+    private float startInnerRadius;
 
     public FlameType flameType = FlameType.mainFlame;
     public FlameColour flameColour = FlameColour.iron;
     public Color AluminumColor = new(0.14f, 0.76f, 0.92f, 1.0f);
     public Color CopperColor = new(0.15f, 0.6f, 0.08f, 1.0f);
     public Color IronColor = new(1.0f, 0.68f, 0.125f, 1.0f);
+
+    public double Energy
+    {
+        get { return energy; }
+        set
+        {
+            energy = value;
+            float energyRatio = (float) energy / (float) startEnergy;
+            FlameLight.pointLightOuterRadius = startOuterRadius * energyRatio;
+            FlameLight.pointLightInnerRadius = startInnerRadius * energyRatio;
+        }
+    }
 
     void Start()
     {
@@ -58,6 +73,9 @@ public class FlameController : MonoBehaviour
         FlameGlow = this.transform.GetChild(4).gameObject.GetComponent<ParticleSystem>();
         FlameSparks = this.transform.GetChild(5).gameObject.GetComponent<ParticleSystem>();
         flameCamera = GetComponentInChildren<Camera>();
+        startEnergy = energy;
+        startOuterRadius = FlameLight.pointLightOuterRadius;
+        startInnerRadius = FlameLight.pointLightInnerRadius;
     }
 
     void Update()
@@ -210,7 +228,7 @@ public class FlameController : MonoBehaviour
 
     private void FlameJump()
     {
-        if (energy < 30)
+        if (Energy < 30)
         {
             Debug.Log("Too small to jump");
             return;
@@ -221,30 +239,30 @@ public class FlameController : MonoBehaviour
         jumpTarget = characterBody.position + jumpVector;
         // Now we scale jumpVector so we can apply the jump in x steps
         jumpVector.Scale(new Vector2(0.2f, 0.2f));
-        energy *= 0.99;  // Use energy to jump
+        Energy *= 0.99;  // Use energy to jump
         Debug.Log("Start jump");
     }
 
     private void flameSplit()
     {
-        if (energy < 80)
+        if (Energy < 80)
         {
             Debug.Log("Too small to split ember");
             return;
         }
         Debug.Log("Flame split");
-        energy = energy - 50;
+        Energy -= 50;
     }
 
     private void dropEmber()
     {
-        if (energy < 30)
+        if (Energy < 30)
         {
             Debug.Log("Too small to drop ember");
             return;
         }
         Debug.Log("Ember dropped");
-        energy = energy - 10;
+        Energy -= 10;
 
         Vector3 offset = -previousInputMovement * 0.5f;
         //Debug.Log(previousInputMovement);
@@ -256,7 +274,7 @@ public class FlameController : MonoBehaviour
     {
         Debug.Log("Ember picked up");
         Destroy(ember); //Destroy the ember
-        energy = energy + 10;
+        Energy += 10;
     }
 
     private void combineSplitFlame(GameObject originalFlame)
@@ -274,7 +292,7 @@ public class FlameController : MonoBehaviour
         originalFlameController.enabled = true;
         this.enabled = false;  // Disable the mini flame controller
         Debug.Log("Mini flame picked up");
-        energy = energy + 30;
+        Energy += 30;
 
         // Destroy the mini flame (this game object)
         Destroy(this.gameObject);
@@ -316,20 +334,9 @@ public class FlameController : MonoBehaviour
         FlameLight.color = lightColor;
     }
 
-    public void setFlameEnergy(double inEnergy)
-    {
-        energy = inEnergy;
-    }
-
-    public double getFlameEnergy()
-    {
-        int tempEnergy = (int)energy;
-        return tempEnergy;
-    }
-
     private void SpawnMiniflame()
     {
-        if (energy < 80)
+        if (Energy < 80)
         {
             Debug.Log("Too small to split flame");
             return;
@@ -338,7 +345,7 @@ public class FlameController : MonoBehaviour
         Debug.Log("Spawning mini flame");
 
         // Reduce the energy of the current flame
-        energy -= 50;
+        Energy -= 50;
 
         // Calculate where to spawn the new flame
         Vector3 spawnPosition = transform.position + new Vector3(1.0f, 0.0f, 0.0f);  // Example offset for the new miniflame
@@ -365,10 +372,6 @@ public class FlameController : MonoBehaviour
         FlameController newFlameController = newMiniflame.GetComponent<FlameController>();
         newFlameController.enabled = true;
         newFlameController.flameColour = flameColour;
-
-
-        //newFlameController.changeColour(FlameColour.copper);
-
 
         this.gameObject.GetComponent<CapsuleCollider2D>().size = new Vector2(4.84f, 4.84f);
         this.enabled = false;  // Disable the current flame's controller
