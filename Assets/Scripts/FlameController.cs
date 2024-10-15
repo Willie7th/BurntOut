@@ -31,6 +31,7 @@ public class FlameController : MonoBehaviour
 
     private Vector2? jumpTarget = null;
     private Vector2 jumpVector;
+    private Vector3 jumpFromPosition;
 
     [SerializeField] private AudioClip flameMoveAudio;
 
@@ -108,6 +109,7 @@ public class FlameController : MonoBehaviour
             {
                 return;
             }
+            jumpFromPosition = this.gameObject.transform.position;
             //Flame Jump
             FlameJump();
         }
@@ -192,6 +194,14 @@ public class FlameController : MonoBehaviour
         energy = se;
     }
 
+    void OnTriggerExit2D(Collider2D col)
+    {
+        if(col.gameObject.name == "Water")
+        {
+            Debug.Log("Flame has left water");
+        }
+    }
+
     void OnTriggerEnter2D(Collider2D col)
     {
         Debug.Log("Trigger enter " + col.gameObject.name);
@@ -221,8 +231,46 @@ public class FlameController : MonoBehaviour
         else if (colName == "Water" && !IsJumping())
         {
             Debug.Log("You die from water");
-            _gameController.waterDeath();
+            if(mainFlame)
+            {
+                if(energy < 150)
+                {
+                    moveFlameBack();
+                }
+                else{
+                    _gameController.waterDeath();
+                }
+                
+            }
+            else{
+                _gameController.miniFlameDead();
+                Destroy(this.gameObject);
+            }
         }
+    }
+
+    private void waterDeath()
+    {
+        if(mainFlame)
+            {
+                if(energy < 150)
+                {
+                    moveFlameBack();
+                }
+                else{
+                    _gameController.waterDeath();
+                }
+                
+            }
+            else{
+                _gameController.miniFlameDead();
+                Destroy(this.gameObject);
+            }
+    }
+
+    private void moveFlameBack()
+    {
+        this.gameObject.transform.position = jumpFromPosition;
     }
 
     void OnCollisionEnter2D(Collision2D collision)
@@ -236,7 +284,16 @@ public class FlameController : MonoBehaviour
         else if (colName == "Water" && !IsJumping())
         {
             Debug.Log("Player Dies");
-            _gameController.waterDeath();
+
+            if(mainFlame)
+            {
+                _gameController.waterDeath();
+            }
+            else{
+                _gameController.miniFlameDead();
+                Destroy(this.gameObject);
+            }
+            
         }
         else if (colName == "MiniFlame(Clone)")
         {
@@ -367,6 +424,8 @@ public class FlameController : MonoBehaviour
         }
 
         Debug.Log("Spawning mini flame");
+
+        _gameController.setMainFlame(this.gameObject);
 
         // Reduce the energy of the current flame
         Energy -= 50;

@@ -22,6 +22,8 @@ public class GameController : MonoBehaviour
 
     private GameObject GameControllerObj;
 
+    private GameObject mainFlameObj;
+
     private FlameType flameState;
 
     public void changeFlameState(){
@@ -326,6 +328,20 @@ public class GameController : MonoBehaviour
         }
         
         _soundManager.PlayBackgroundMusic("Audio/BackgroundMusic/LevelBackground", 0.033f);
+    }
+
+    public void setMainFlame(GameObject flame)  //set a reference to the main flame
+    {
+        mainFlameObj = flame;
+    }
+
+    public void miniFlameDead()
+    {
+        FlameController newFlameController = mainFlameObj.GetComponent<FlameController>();
+        newFlameController.enabled = true;
+
+        Camera newFlameCamera = mainFlameObj.GetComponentInChildren<Camera>();
+        newFlameCamera.enabled = true;
     }
 
     public double getEnergySpent()
