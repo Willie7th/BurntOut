@@ -53,7 +53,7 @@ public class FlameController : MonoBehaviour
         set
         {
             energy = value;
-            float energyRatio = (float) energy / (float) startEnergy;
+            float energyRatio = (float)energy / (float)startEnergy;
             FlameLight.pointLightOuterRadius = startOuterRadius * energyRatio;
             FlameLight.pointLightInnerRadius = startInnerRadius * energyRatio;
         }
@@ -179,6 +179,17 @@ public class FlameController : MonoBehaviour
     public bool IsJumping()
     {
         return jumpTarget != null;
+    }
+
+    public double RemainingEnergy()
+    {
+        return startEnergy - energy;
+    }
+
+    public void SetStartEnergy(double se)
+    {
+        startEnergy = se;
+        energy = se;
     }
 
     void OnTriggerEnter2D(Collider2D col)

@@ -25,7 +25,7 @@ public class Flicker : MonoBehaviour
     void Update()
     {
         // The radius may have changed since the last flicker
-        defaultRadius = myLight.pointLightOuterRadius;
+        if (isOn) defaultRadius = myLight.pointLightOuterRadius;
         timer += Time.deltaTime;
         if (timer > delay)
         {
