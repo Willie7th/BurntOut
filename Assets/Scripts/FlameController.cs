@@ -42,6 +42,8 @@ public class FlameController : MonoBehaviour
     private float startOuterRadius;
     private float startInnerRadius;
     private bool isInWater = false;
+    private bool moveToFinish = false;
+    private Transform pedestalCenter;
 
     public FlameType flameType = FlameType.mainFlame;
     public FlameColour flameColour = FlameColour.iron;
@@ -181,6 +183,20 @@ public class FlameController : MonoBehaviour
             }
             Debug.Log("End jump");
         }
+
+        if (moveToFinish && pedestalCenter != null)
+        {
+            // Move player towards the pedestal center
+            this.gameObject.transform.position = Vector3.MoveTowards(this.gameObject.transform.position, pedestalCenter.position, 3f * Time.deltaTime);
+
+            // Check if the player reached the center
+            if (Vector3.Distance(this.gameObject.transform.position, pedestalCenter.position) < 0.1f)
+            {
+                moveToFinish = false;
+                _gameController.finishLevel();
+                // Trigger the final animation or level end here
+            }
+        }
     }
 
     public FlameColour getFlameType()
@@ -223,7 +239,10 @@ public class FlameController : MonoBehaviour
         }
         else if (colName == "Finish")
         {
-            _gameController.finishLevel();
+
+            moveToFinish = true;
+            pedestalCenter = col.gameObject.transform;
+            //_gameController.finishLevel();
         }
         else if (colName == "Water")
         {
