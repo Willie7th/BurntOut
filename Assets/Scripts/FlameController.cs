@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 using TMPro;
 using UnityEngine.Rendering.Universal;
@@ -50,6 +51,7 @@ public class FlameController : MonoBehaviour
     public Color AluminumColor = new(0.14f, 0.76f, 0.92f, 1.0f);
     public Color CopperColor = new(0.15f, 0.6f, 0.08f, 1.0f);
     public Color IronColor = new(1.0f, 0.68f, 0.125f, 1.0f);
+    public Color DeathColor = new(1.0f, 0f, 0f, 1.0f);
 
     public double Energy
     {
@@ -450,8 +452,8 @@ public class FlameController : MonoBehaviour
                     Debug.Log("Almost died");
                 }
                 else{
-                    _gameController.waterDeath();
                     this.enabled = false;
+                    StartCoroutine(DeathAnimation());
                 }
 
             }
@@ -459,5 +461,17 @@ public class FlameController : MonoBehaviour
                 _gameController.miniFlameDead();
                 Destroy(this.gameObject);
             }
+    }
+
+    IEnumerator DeathAnimation()
+    {
+        FlameLight.intensity = 0.3f;
+        FlameLight.color = DeathColor;
+        FlameAlpha.enableEmission = false;
+        FlameAdd.enableEmission = false;
+        FlameGlow.enableEmission = false;
+        FlameSparks.enableEmission = false;
+        yield return new WaitForSeconds(1f);
+        _gameController.waterDeath();
     }
 }
