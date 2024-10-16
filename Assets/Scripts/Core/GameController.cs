@@ -280,8 +280,8 @@ public class GameController : MonoBehaviour
                 _gameUIController = FindAnyObjectByType<GameUIController>();
 
                 //Set timer to 10 minutes (600 seconds)
-                _gameUIController.SetTimer(300f);  // 10 minutes in seconds
-                levelStartTime = 300f;
+                _gameUIController.SetTimer(450f);  // 10 minutes in seconds
+                levelStartTime = 450f;
 
                 _flameController = FindAnyObjectByType<FlameController>();
                 _flameController.SetStartEnergy(1000);
@@ -304,11 +304,11 @@ public class GameController : MonoBehaviour
                 _gameUIController = FindAnyObjectByType<GameUIController>();
 
                 //Set timer to 10 minutes (600 seconds)
-                _gameUIController.SetTimer(600f);  // 10 minutes in seconds
-                levelStartTime = 600f;
+                _gameUIController.SetTimer(750f);  // 10 minutes in seconds
+                levelStartTime = 750f;
 
                 _flameController = FindAnyObjectByType<FlameController>();
-                _flameController.SetStartEnergy(1000);
+                _flameController.SetStartEnergy(1100);
                 currentLevel = level;
                 
                 break;
@@ -328,11 +328,11 @@ public class GameController : MonoBehaviour
                 _gameUIController = FindAnyObjectByType<GameUIController>();
 
                 //Set timer to 10 minutes (600 seconds)
-                _gameUIController.SetTimer(600f);  // 10 minutes in seconds
-                levelStartTime = 600f;
+                _gameUIController.SetTimer(900);  // 10 minutes in seconds
+                levelStartTime = 900;
 
                 _flameController = FindAnyObjectByType<FlameController>();
-                _flameController.SetStartEnergy(1000);
+                _flameController.SetStartEnergy(1300);
                 currentLevel = level;
                 
                 break;
