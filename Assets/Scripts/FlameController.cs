@@ -35,6 +35,8 @@ public class FlameController : MonoBehaviour
     private float jumpedDistance;
 
     [SerializeField] private AudioClip flameMoveAudio;
+    [SerializeField] private AudioClip flameWaterAudio;
+    [SerializeField] private AudioClip flameDeathAudio;
 
     public TextMeshProUGUI energyLabel;
 
@@ -143,7 +145,7 @@ public class FlameController : MonoBehaviour
         else if (isMovementKeyPressed && !isMoving)
         {
             // Start playing movement sound
-            _soundManager.PlayMovementSound(flameMoveAudio, 0.1f);
+            _soundManager.PlayMovementSound(flameMoveAudio, 0.05f);
             isMoving = true;
             //Debug.Log("Is moving true");
         }
@@ -452,15 +454,18 @@ public class FlameController : MonoBehaviour
                     //_gameController.waterDeath();
                     //this.enabled = false;
                     Energy -= 100; 
+                    _soundManager.PlaySound(flameWaterAudio, 0.75f);
                     Debug.Log("Almost died");
                 }
                 else{
+                    _soundManager.PlaySound(flameDeathAudio, 0.5f);
                     this.enabled = false;
                     StartCoroutine(DeathAnimation());
                 }
 
             }
             else{
+                _soundManager.PlaySound(flameDeathAudio, 0.5f);
                 _gameController.miniFlameDead();
                 Destroy(this.gameObject);
             }
