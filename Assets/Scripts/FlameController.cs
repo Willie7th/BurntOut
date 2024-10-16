@@ -449,7 +449,7 @@ public class FlameController : MonoBehaviour
                 if(energy > 150)
                 {
                     Vector3 tempPos = new Vector3(previousInputMovement.x, previousInputMovement.y, 0f);
-                    this.gameObject.transform.position = this.gameObject.transform.position + (-1.0f * tempPos); 
+                    this.gameObject.transform.position = this.gameObject.transform.position + (-0.75f * tempPos); 
                     //moveFlameBack();
                     //_gameController.waterDeath();
                     //this.enabled = false;
