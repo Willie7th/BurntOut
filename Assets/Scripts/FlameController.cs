@@ -239,7 +239,10 @@ public class FlameController : MonoBehaviour
         }
         else if (colName == "Finish")
         {
-
+            if(!mainFlame)
+            {
+                return;
+            }
             moveToFinish = true;
             pedestalCenter = col.gameObject.transform;
             //_gameController.finishLevel();

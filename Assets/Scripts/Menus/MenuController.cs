@@ -34,7 +34,7 @@ public class MenuController : MonoBehaviour
 
         loadLevels();
 
-        _soundManager.PlayBackgroundMusic("Audio/BackgroundMusic/MenuBackground", 0.1f);
+        //_soundManager.PlayBackgroundMusic("Audio/BackgroundMusic/MenuBackground", 0.1f);
         
         /*
         saveFilePath = Path.Combine(Application.dataPath, "SaveData/levels.txt");
