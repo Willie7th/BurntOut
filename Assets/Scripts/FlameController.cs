@@ -9,6 +9,7 @@ public class FlameController : MonoBehaviour
     public float speed = 5f;  //maybe add a sprint mechanic
     public float jumpDistance = 2.5f;
     public float jumpSpeed = 30f;
+    public float minVisibleRadiusPerc = 0.25f;
 
     private Rigidbody2D characterBody;
     public ParticleSystem FlameAlpha;
@@ -54,9 +55,9 @@ public class FlameController : MonoBehaviour
         set
         {
             energy = value;
-            float energyRatio = (float)energy / (float)startEnergy;
-            FlameLight.pointLightOuterRadius = startOuterRadius * energyRatio;
-            FlameLight.pointLightInnerRadius = startInnerRadius * energyRatio;
+            float radiusRatio = minVisibleRadiusPerc + ((float)energy / (float)startEnergy) * (1f-minVisibleRadiusPerc);
+            FlameLight.pointLightOuterRadius = startOuterRadius * radiusRatio;
+            FlameLight.pointLightInnerRadius = startInnerRadius * radiusRatio;
         }
     }
 
