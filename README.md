@@ -4,6 +4,8 @@
 
 Burnt Out uses Unity 6 (since it has support for shadow maps on tile maps). Follow the usual installation and build steps i.e. `File > Build and Run`.
 
+When running from source in the Unity editor, start the game from the `Scenes/Title.unity` scene. Not doing so can cause some components not to load correctly.
+
 ## Attributions
 
 Flame animation loosely based on a tutorial youtube channel Sirhaian, available [here](https://youtu.be/5Mw6NpSEb2o?si=9mpBVNYDVZqXsiVf).
